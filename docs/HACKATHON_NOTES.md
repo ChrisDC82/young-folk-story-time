@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 4 additions
+
+- Reusable, tested Story Time/Carnival progression and Carnival exploration models, with no new narrative or Milestone 5 state.
+- Newly written `StoryTimeScene` and `CarnivalScene` cinematic/interactive implementation using lightweight Phaser tweens, overlays, camera motion, particles, hotspots, dialogue, character expression swaps, and reduced-motion fallbacks.
+- Byte-for-byte runtime copies of the pre-existing creator-supplied `Story pot.png` and `Kiddies Carnival Background.png`; the source artwork remains protected and unchanged.
+- Three brief Carnival exploration hotspots and a Milestone 4 endpoint. No steelpan gameplay, delayed consequence, later narrative branch, audio download, or external service was added.
+- Twelve additional automated flow/Carnival tests plus three-branch desktop and landscape-phone browser validation.
+
 ## Milestone 3 additions
 
 - A reusable, deterministic sequencing mini-game model and a Phaser presentation scene for the Carnival Costume Challenge.
@@ -33,4 +41,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 3, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 4, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.

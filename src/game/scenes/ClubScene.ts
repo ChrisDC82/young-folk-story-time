@@ -11,6 +11,7 @@ import { addMuteControl } from '../components/MuteControl';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
 import { NarrativeEngine } from '../systems/NarrativeEngine';
+import { StoryProgression } from '../systems/StoryProgression';
 
 type KeyboardStage = 'explore' | 'dialogue' | 'choices' | 'selected' | 'transition';
 
@@ -31,6 +32,11 @@ export class ClubScene extends Phaser.Scene {
   }
 
   create(): void {
+    this.selectedChoice = undefined;
+    this.availableChoices = [];
+    this.choiceButtons = [];
+    this.choicePanel = undefined;
+    this.keyboardStage = 'explore';
     AudioManager.shared.bind(this);
     this.add.image(640, 360, 'cc-club').setDisplaySize(1280, 720);
 
@@ -218,6 +224,7 @@ export class ClubScene extends Phaser.Scene {
     this.input.enabled = false;
     this.cameras.main.fadeOut(650, 255, 211, 71);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      StoryProgression.shared.enterCostume();
       this.scene.start('CostumeGameScene');
     });
   }

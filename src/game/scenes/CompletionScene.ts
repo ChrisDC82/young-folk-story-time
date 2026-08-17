@@ -6,6 +6,7 @@ import { GameButton } from '../components/GameButton';
 import { CostumeSequenceGame } from '../minigames/costume/CostumeSequenceGame';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
+import { StoryProgression } from '../systems/StoryProgression';
 
 interface BranchPresentation {
   title: string;
@@ -91,23 +92,30 @@ export class CompletionScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    const newStory = () => {
+    const storyTime = () => {
+      StoryProgression.shared.enterStoryTime();
       this.input.enabled = false;
-      this.cameras.main.fadeOut(350, 48, 23, 76);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start('TitleScene'));
+      this.cameras.main.fadeOut(450, 255, 214, 77);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start('StoryTimeScene'));
     };
     const replayCostume = () => {
       new CostumeSequenceGame(GameStateManager.shared, costumeStepOrder).restartChallenge();
+      StoryProgression.shared.enterCostume();
       this.input.enabled = false;
       this.cameras.main.fadeOut(350, 48, 23, 76);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
         this.scene.start('CostumeGameScene');
       });
     };
-    new GameButton(this, 415, 525, 'Try the costume again', replayCostume, { width: 390, height: 82, fontSize: 28 });
-    new GameButton(this, 865, 525, 'New story', newStory, { width: 300, height: 82, fontSize: 29 });
+    new GameButton(this, 385, 525, 'Try the costume again', replayCostume, { width: 365, height: 82, fontSize: 27 });
+    new GameButton(this, 875, 525, 'STORY TIME!  ✨', storyTime, {
+      width: 390,
+      height: 88,
+      fontSize: 32,
+      fillColor: 0xffd34e,
+    });
     this.add
-      .text(640, 600, 'Milestone 3 complete — Story Time comes in a later milestone.', {
+      .text(640, 610, 'The magical story pot is ready • Press Enter for Story Time', {
         fontFamily: 'Trebuchet MS, sans-serif',
         fontSize: '22px',
         color: '#fff8dc',
@@ -116,7 +124,7 @@ export class CompletionScene extends Phaser.Scene {
 
     addMuteControl(this);
     const enterKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, newStory);
+    enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, storyTime);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => enterKey?.destroy());
     this.cameras.main.fadeIn(600, 255, 211, 71);
   }

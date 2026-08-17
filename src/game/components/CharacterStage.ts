@@ -9,14 +9,22 @@ interface CharacterActor {
   label: Phaser.GameObjects.Text;
 }
 
+type CharacterStageOverrides = Partial<Record<CharacterId, Partial<CharacterDefinition['stage']>>>;
+
 export class CharacterStage {
   private readonly actors = new Map<CharacterId, CharacterActor>();
 
   constructor(
     private readonly scene: Phaser.Scene,
     definitions: Record<CharacterId, CharacterDefinition>,
+    stageOverrides: CharacterStageOverrides = {},
   ) {
-    Object.values(definitions).forEach((definition) => this.createActor(definition));
+    Object.values(definitions).forEach((definition) => {
+      this.createActor({
+        ...definition,
+        stage: { ...definition.stage, ...stageOverrides[definition.id] },
+      });
+    });
   }
 
   showLead(characterId: CharacterId): void {
@@ -66,6 +74,21 @@ export class CharacterStage {
     if (!actor) return;
     const texture = actor.definition.textures[expression] ?? actor.definition.textures.neutral;
     actor.sprite.setTexture(texture).setDisplaySize(actor.definition.stage.width, actor.definition.stage.height);
+  }
+
+  startIdleMotion(reducedMotion = false): void {
+    if (reducedMotion) return;
+    this.actors.forEach((actor, id) => {
+      this.scene.tweens.add({
+        targets: actor.container,
+        y: actor.definition.stage.y - (id === 'angel' ? 7 : 5),
+        duration: id === 'junior' ? 1700 : 1450,
+        delay: id === 'lexi' ? 0 : id === 'angel' ? 180 : 340,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.InOut',
+      });
+    });
   }
 
   private createActor(definition: CharacterDefinition): void {

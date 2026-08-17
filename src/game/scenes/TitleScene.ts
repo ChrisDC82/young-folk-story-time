@@ -3,7 +3,7 @@ import { carnivalChoicesEpisode } from '../../episodes/carnival-choices/episode'
 import { addMuteControl } from '../components/MuteControl';
 import { GameButton } from '../components/GameButton';
 import { AudioManager } from '../systems/AudioManager';
-import { GameStateManager } from '../systems/GameStateManager';
+import { StoryProgression } from '../systems/StoryProgression';
 
 export class TitleScene extends Phaser.Scene {
   constructor() {
@@ -39,7 +39,7 @@ export class TitleScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     const start = () => {
-      GameStateManager.shared.reset();
+      StoryProgression.shared.startNewStory();
       this.input.enabled = false;
       this.cameras.main.fadeOut(420, 48, 23, 76);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {

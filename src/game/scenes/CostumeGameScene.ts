@@ -33,6 +33,9 @@ export class CostumeGameScene extends Phaser.Scene {
   }
 
   create(): void {
+    this.cards.clear();
+    this.slots = [];
+    this.interactionLocked = false;
     AudioManager.shared.bind(this);
     this.gameModel = new CostumeSequenceGame(GameStateManager.shared, costumeStepOrder);
 

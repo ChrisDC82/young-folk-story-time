@@ -8,6 +8,8 @@ export const carnivalChoicesEpisode = {
   assets: {
     clubBackground: '/assets/backgrounds/cc-club/cc-club-interior.png',
     lexiMakingWings: '/assets/backgrounds/cc-club/lexi-making-wings.png',
+    storyPot: '/assets/backgrounds/cc-club/story-pot.png',
+    carnivalBackground: '/assets/backgrounds/carnival/kiddies-carnival-background.png',
   },
   characters: carnivalCharacters,
   openingStory: ccClubOpeningStory,

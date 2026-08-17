@@ -3,7 +3,9 @@ import { BootScene } from './scenes/BootScene';
 import { ClubScene } from './scenes/ClubScene';
 import { CompletionScene } from './scenes/CompletionScene';
 import { CostumeGameScene } from './scenes/CostumeGameScene';
+import { CarnivalScene } from './scenes/CarnivalScene';
 import { PreloadScene } from './scenes/PreloadScene';
+import { StoryTimeScene } from './scenes/StoryTimeScene';
 import { TitleScene } from './scenes/TitleScene';
 
 export const GAME_WIDTH = 1280;
@@ -16,7 +18,16 @@ export function buildGameConfig(parent: string): Phaser.Types.Core.GameConfig {
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
     backgroundColor: '#21143c',
-    scene: [BootScene, PreloadScene, TitleScene, ClubScene, CostumeGameScene, CompletionScene],
+    scene: [
+      BootScene,
+      PreloadScene,
+      TitleScene,
+      ClubScene,
+      CostumeGameScene,
+      CompletionScene,
+      StoryTimeScene,
+      CarnivalScene,
+    ],
     render: {
       antialias: true,
       pixelArt: false,

@@ -1,5 +1,58 @@
 # Development Log
 
+## 2026-08-17 — Milestone 4: Story Time Transition + Carnival Arrival
+
+### Scope completed
+
+- Replaced the Milestone 3 stopping copy with a deliberate child-friendly **STORY TIME!** continuation action after the Creator Badge.
+- Added a reusable `StoryProgression` controller for guarded Club → Costume → Story Time → Carnival → Milestone 4 completion flow. It changes no narrative values.
+- Added episode-owned Story Time bridge dialogue, magical-reaction dialogue, Carnival arrival dialogue, and Carnival hotspot definitions.
+- Added `StoryTimeScene` as a cinematic interactive transition: the CC Club dims, the story pot glows, lightweight sparkles rise, the Caribbean map is outlined, Trinidad & Tobago is highlighted and labelled, Lexi says “Story time is here!”, Angel and Junior react, and the supplied story-pot close-up performs a gentle camera push before Carnival.
+- Added `CarnivalScene` using the supplied empty Kiddies Carnival environment with proportional cover scaling, a subtle background push, low-count drifting confetti, floating musical notes, slide/fade character arrival, expression swaps, and gentle idle motion.
+- Added three large pointer/touch/keyboard hotspots for the steelpan stage, Carnival banner, and festival flags. Each provides brief visual/dialogue feedback only; Pan Jam was not implemented.
+- Added a clear Milestone 4 completion overlay after at least one hotspot interaction, with Pan Jam named only as the next milestone.
+- Added `prefers-reduced-motion` fallbacks that shorten scene fades and transition tweens, remove camera movement and repeating idle/pulse motion, and reduce static particle counts without removing textual or visual meaning.
+- Fixed Phaser scene-instance replay state so repeated full stories reset scene-local locks, cards, stages, and hotspot collections correctly.
+
+### Artwork and provenance
+
+- Reused the creator-supplied CC Club background and existing Lexi, Angel, and Junior runtime derivatives without alteration.
+- Created `public/assets/backgrounds/cc-club/story-pot.png` as a byte-for-byte copy of `assets-original/Story pot.png`.
+- Created `public/assets/backgrounds/carnival/kiddies-carnival-background.png` as a byte-for-byte copy of `assets-original/Kiddies Carnival Background.png`.
+- The 3:2 Carnival source is never stretched. Phaser scales it proportionally to cover the 16:9 canvas, with only a reversible top/bottom presentation crop.
+- No supplied image was edited, regenerated, uploaded, or processed by an external service.
+
+### State preservation
+
+- Story Time, Carnival arrival, hotspot exploration, and Milestone 4 completion add no fields to `CarnivalGameState` and apply no state effects.
+- Angel trust, Junior trust, cooperation, opening choice, `usedShortcut`, instructions followed, combined ideas, `costumeAttempts`, and `costumeCompleted` remain unchanged through the complete transition.
+- `costumeCompleted` remains the Creator Badge/completed-costume signal.
+- `usedShortcut === true` is preserved without triggering a strap failure or any delayed consequence.
+- Starting a new full story still resets the complete episode state.
+
+### Architecture and automated coverage
+
+- Added Phaser-independent `StoryProgression` and `CarnivalExperience` systems so transition guards, Carnival initialization, hotspot visits, state preservation, and restart behavior can be tested without rendering Phaser.
+- Added 12 tests covering completed-costume transition, all three opening branches through Story Time, shortcut and attempt preservation, Carnival arrival readiness, full-story reset, absence of Milestone 5 state, Carnival initialization, hotspot visits, and incomplete-costume rejection.
+- Full suite: 34 tests passed across 6 test files.
+
+### Validation
+
+- Strict TypeScript (`tsc --noEmit`): passed.
+- Production build (`tsc --noEmit && vite build`): passed; the existing Phaser bundle-size advisory remains non-blocking.
+- Browser end-to-end: Follow Junior, Follow Angel, and Work Together each completed opening → costume → Creator Badge → Story Time → Carnival.
+- Desktop: keyboard narrative flow, pointer costume controls, keyboard and pointer hotspots, mute toggle, transition visuals, Carnival exploration, milestone completion, and repeated full-story replay passed.
+- Landscape phone viewport (844×390): full Work Together path passed with touch-style taps; canvas, dialogue, cards, Story Time, Carnival, hotspots, and endpoint remained reachable.
+- Browser console: no warnings or errors.
+- Reduced-motion implementation is code-complete and retains all text/state cues; the browser harness did not expose an operating-system motion-preference emulator for a separate visual pass.
+- Free/open-source dependencies added: none.
+
+### Explicitly deferred
+
+- Pan Jam and adaptive rhythm difficulty.
+- Moko Jumbie emotional choices and Angel's fear storyline.
+- Delayed shortcut consequence, broken wing strap, Carnival Crisis, endings, Story Card, AI, backend services, authentication, databases, analytics, payments, and paid services.
+
 ## 2026-08-17 — Milestone 3: Carnival Costume Challenge
 
 ### Scope completed

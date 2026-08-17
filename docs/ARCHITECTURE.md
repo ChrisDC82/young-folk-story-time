@@ -69,6 +69,24 @@ CompletionScene (Creator Badge + preserved opening branch)
 - The model changes only `costumeAttempts` and `costumeCompleted`. Costume board reset retains all game state; costume restart resets only those two fields. A new story from the title still resets the complete episode state.
 - The completion scene reads the retained `openingChoice` to demonstrate scene-to-scene continuity. `usedShortcut` is intentionally preserved and has no Milestone 3 consequence.
 
+## Milestone 4 Story Time and Carnival flow
+
+```text
+CompletionScene (Creator Badge)
+        ↓ StoryProgression.enterStoryTime()
+StoryTimeScene → episode transition dialogue/data
+        ↓ StoryProgression.arriveAtCarnival()
+CarnivalScene → CarnivalExperience → episode hotspot data
+        ↓
+Milestone 4 completion (no narrative state mutation)
+```
+
+- `StoryProgression` owns only ephemeral scene-stage guards. It resets the existing `GameStateManager` when a new full story begins but does not add scene progress to `CarnivalGameState`.
+- `CarnivalExperience` validates costume completion, initializes episode-owned hotspot definitions, and tracks scene-local visits without changing narrative state.
+- Story Time and Carnival dialogue plus hotspot definitions live in `src/episodes/carnival-choices/transition.ts`; Phaser scenes remain presentation/orchestration layers.
+- Scene instances explicitly reset local UI/interaction fields in `create()` because Phaser may reuse an instance during repeated playthroughs.
+- Both new scenes read `prefers-reduced-motion` and remove nonessential repeating/camera movement while retaining the same dialogue, highlights, state, and continuation controls.
+
 ## Deferred boundaries
 
-The engine can represent later branches, but the project does not yet implement the delayed shortcut consequence, Story Time, Carnival exploration, the steelpan mini-game, saving, ending resolution, or later Carnival scenes. Those systems should consume the same state and narrative contracts in subsequent milestones.
+The engine can represent later branches, but the project does not yet implement the delayed shortcut consequence, the Pan Jam steelpan mini-game, saving, ending resolution, or later Carnival story branches. Those systems should consume the same state and narrative contracts in subsequent milestones.
