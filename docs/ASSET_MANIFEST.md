@@ -26,3 +26,5 @@ Inventory completed on 2026-08-17. All supplied files are PNG images in RGB mode
 | `public/assets/characters/lexi/lexi-front.png` | `Lexi Character Sheet.png` | Cropped from the front-pose area on a derivative, then only near-white pixels connected to the crop boundary were made transparent. No resampling or character redesign. | 344×458 RGBA PNG used for Lexi's static/lightly animated CC Club presentation. |
 
 The extraction procedure is reproducible in `scripts/prepare-assets.py`. It writes only to `public/assets/`.
+
+Milestone 2 character-expression derivatives are detailed in `docs/ASSET_REPORT.md`.

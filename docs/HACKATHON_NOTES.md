@@ -12,8 +12,16 @@
 - Phaser 3.90.0
 - Vite 7.x
 - TypeScript 5.9.x
+- Vitest 4.x (MIT-licensed, local automated testing only)
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
+
+## Milestone 2 additions
+
+- Reusable typed narrative, state, condition, effect, choice, and dialogue-progression systems.
+- Episode-owned opening conversation and three tested branches.
+- Newly prepared runtime-only expression derivatives for Lexi, Angel, and Junior; the underlying supplied artwork remains unchanged.
+- Automated state, choice, condition, progression, reset, and scene-state tests.
 
 ## AI-assisted development
 

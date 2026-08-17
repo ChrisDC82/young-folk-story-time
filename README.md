@@ -1,6 +1,6 @@
 # Young Folk: Story Time — Carnival Choices
 
-Milestone 1 is a local, browser-based playable skeleton built with Phaser, TypeScript, and Vite. It includes a title screen, the CC Club scene, Lexi, a steelpan hotspot, reusable dialogue and choice UI, a completion transition, and a global mute control.
+Milestone 2 is a local, browser-based narrative game foundation built with Phaser, TypeScript, and Vite. It includes the Milestone 1 scene stack plus a reusable typed narrative engine, episode state, conditional choices, state effects, character expressions, automated tests, and the first branching CC Club conversation with Lexi, Angel, and Junior.
 
 ## Requirements
 
@@ -19,6 +19,7 @@ Open the local URL printed by Vite. Use a landscape browser window for the inten
 ## Validate and build
 
 ```bash
+pnpm test
 pnpm typecheck
 pnpm build
 pnpm preview
@@ -30,7 +31,7 @@ The production output is written to `dist/`.
 
 - Tap/click the large controls, or use the displayed keyboard shortcuts.
 - Press `H` to activate the steelpan hotspot.
-- Press `1`, `2`, or `3` to select a choice.
+- Press `1`, `2`, or `3` to select a currently available choice.
 - Press `Enter` or `Space` to advance.
 - Press `M` or select the speaker button to mute/unmute.
 

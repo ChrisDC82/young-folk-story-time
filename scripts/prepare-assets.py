@@ -11,6 +11,35 @@ ROOT = Path(__file__).resolve().parents[1]
 ORIGINALS = ROOT / "assets-original"
 PUBLIC = ROOT / "public" / "assets"
 
+CHARACTER_POSES = {
+    "lexi": {
+        "source": "Lexi Character Sheet.png",
+        "poses": {
+            "front": (26, 70, 385, 560),
+            "happy": (25, 645, 380, 1125),
+            "excited": (1010, 645, 1350, 1135),
+        },
+    },
+    "angel": {
+        "source": "Angel Character Sheet.png",
+        "poses": {
+            "front": (45, 45, 430, 485),
+            "happy": (45, 545, 420, 945),
+            "thinking": (430, 545, 745, 945),
+            "excited": (1120, 545, 1500, 945),
+        },
+    },
+    "junior": {
+        "source": "Junior Character Sheet.png",
+        "poses": {
+            "front": (40, 55, 360, 530),
+            "happy": (35, 640, 360, 1105),
+            "thinking": (385, 640, 690, 1105),
+            "surprised": (690, 640, 1010, 1105),
+        },
+    },
+}
+
 
 def connected_white_to_alpha(image: Image.Image) -> Image.Image:
     rgba = image.convert("RGBA")
@@ -55,15 +84,15 @@ def main() -> None:
     background_target.parent.mkdir(parents=True, exist_ok=True)
     copy2(ORIGINALS / "Community Cultural Club Background.png", background_target)
 
-    lexi_target = PUBLIC / "characters" / "lexi" / "lexi-front.png"
-    lexi_target.parent.mkdir(parents=True, exist_ok=True)
-    with Image.open(ORIGINALS / "Lexi Character Sheet.png") as sheet:
-        front_pose = sheet.crop((26, 70, 385, 560))
-        runtime_sprite = connected_white_to_alpha(front_pose)
-        runtime_sprite.save(lexi_target, optimize=True)
-
     print(f"Prepared {background_target.relative_to(ROOT)}")
-    print(f"Prepared {lexi_target.relative_to(ROOT)} ({runtime_sprite.width}x{runtime_sprite.height})")
+    for character_id, character in CHARACTER_POSES.items():
+        with Image.open(ORIGINALS / character["source"]) as sheet:
+            for pose_name, crop_box in character["poses"].items():
+                target = PUBLIC / "characters" / character_id / f"{character_id}-{pose_name}.png"
+                target.parent.mkdir(parents=True, exist_ok=True)
+                runtime_sprite = connected_white_to_alpha(sheet.crop(crop_box))
+                runtime_sprite.save(target, optimize=True)
+                print(f"Prepared {target.relative_to(ROOT)} ({runtime_sprite.width}x{runtime_sprite.height})")
 
 
 if __name__ == "__main__":

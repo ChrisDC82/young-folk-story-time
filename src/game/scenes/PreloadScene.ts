@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { carnivalChoicesEpisode } from '../../episodes/carnival-choices/episode';
+import type { CharacterExpression } from '../../types/characters';
 import { AudioManager } from '../systems/AudioManager';
 
 export class PreloadScene extends Phaser.Scene {
@@ -39,7 +40,15 @@ export class PreloadScene extends Phaser.Scene {
     });
 
     this.load.image('cc-club', carnivalChoicesEpisode.assets.clubBackground);
-    this.load.image('lexi-front', carnivalChoicesEpisode.assets.lexiFront);
+    Object.values(carnivalChoicesEpisode.characters).forEach((character) => {
+      (Object.keys(character.assets) as CharacterExpression[]).forEach((expression) => {
+        const assetPath = character.assets[expression];
+        const textureKey = character.textures[expression];
+        if (assetPath && textureKey && !this.textures.exists(textureKey)) {
+          this.load.image(textureKey, assetPath);
+        }
+      });
+    });
   }
 
   create(): void {

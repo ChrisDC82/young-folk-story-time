@@ -11,12 +11,14 @@ export class ChoiceButton extends GameButton {
     choiceId: string,
     index: number,
     label: string,
+    description: string | undefined,
     onSelect: (choiceId: string) => void,
   ) {
-    super(scene, x, y, `${index}.  ${label}`, () => onSelect(choiceId), {
+    const buttonText = description ? `${index}.  ${label}\n${description}` : `${index}.  ${label}`;
+    super(scene, x, y, buttonText, () => onSelect(choiceId), {
       width: 720,
-      height: 76,
-      fontSize: 28,
+      height: 90,
+      fontSize: 24,
       fillColor: 0xfff5c4,
       hoverColor: 0xffe08a,
       textColor: '#2b1648',

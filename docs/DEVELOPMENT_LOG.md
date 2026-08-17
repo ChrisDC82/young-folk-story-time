@@ -1,5 +1,50 @@
 # Development Log
 
+## 2026-08-17 — Milestone 2: Narrative Engine
+
+### Scope completed
+
+- Added typed character IDs, expression IDs, story nodes, story choices, story conditions, state effects, and Carnival episode state.
+- Added reusable `GameStateManager`, `ChoiceSystem`, and `NarrativeEngine` classes that do not depend on Phaser and can be tested independently.
+- Added dialogue progression, conditional-choice filtering, guarded choice selection, node conditions, node actions, and scene-independent state snapshots.
+- Added Angel trust, Junior trust, cooperation, instruction, combined-ideas, selected-opening-choice, and shortcut state.
+- Moved the CC Club opening conversation, three player choices, effects, reactions, character definitions, texture mappings, and branch text into episode-specific data modules.
+- Preserved the existing Boot, Preload, Title, CC Club, and Completion scene architecture plus the Milestone 1 hotspot, dialogue box, choice button, responsive canvas, keyboard controls, and mute control.
+- Added a reusable `CharacterStage` that displays Lexi, Angel, and Junior, swaps expression textures, highlights the current speaker, and shows visibly different branch reactions.
+- Added separate runtime derivatives for the exact character expressions required by this conversation. Protected source artwork remains unchanged.
+- Added 14 automated tests covering initial/reset state, typed effects, trust persistence, all three opening-choice outcomes, conditional choices, invalid choices, dialogue progression, branch destinations, required-choice guards, and state shared across scene-level engines.
+
+### Opening choice effects
+
+- **Follow Junior:** Junior trust +1; instructions followed; shortcut not used.
+- **Follow Angel:** Angel trust +1; shortcut used; instructions not followed.
+- **Work Together:** Angel trust +1, Junior trust +1, cooperation +1; instructions followed; ideas combined; shortcut not used.
+
+The numeric values remain internal and are not displayed to children.
+
+### Architecture decisions
+
+- Reusable narrative types live in `src/types/`; reusable state and story behavior live in `src/game/systems/`; episode-owned copy and configuration live in `src/episodes/carnival-choices/`.
+- The narrative engine receives a state manager instead of owning global state, allowing tests and future episodes to create isolated state while scenes share the singleton manager.
+- Choices are filtered by typed conditions before display and revalidated before effects are applied.
+- A story node applies actions only when entered, preventing repeated reads from applying effects more than once.
+- Starting a new playthrough from the title resets episode state; transitioning to another scene does not.
+- Vitest was added as a local-only MIT-licensed development dependency. No API or hosted service is used.
+
+### Explicitly deferred
+
+- Later consequences of the shortcut.
+- Costume and steelpan mini-games.
+- Trust-dependent later scenes, ending resolution, saving, and persistence.
+- Additional hotspots and full character animation.
+
+### Validation
+
+- Automated tests: 14 passed.
+- Strict TypeScript check: passed.
+- Browser validation: all three reactions and scene-to-scene branch summaries passed with no console errors.
+- Production build: passed.
+
 ## 2026-08-17 — Milestone 1: Playable Skeleton
 
 ### Scope completed
