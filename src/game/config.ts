@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { ClubScene } from './scenes/ClubScene';
 import { CompletionScene } from './scenes/CompletionScene';
+import { CostumeGameScene } from './scenes/CostumeGameScene';
 import { PreloadScene } from './scenes/PreloadScene';
 import { TitleScene } from './scenes/TitleScene';
 
@@ -15,7 +16,7 @@ export function buildGameConfig(parent: string): Phaser.Types.Core.GameConfig {
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
     backgroundColor: '#21143c',
-    scene: [BootScene, PreloadScene, TitleScene, ClubScene, CompletionScene],
+    scene: [BootScene, PreloadScene, TitleScene, ClubScene, CostumeGameScene, CompletionScene],
     render: {
       antialias: true,
       pixelArt: false,

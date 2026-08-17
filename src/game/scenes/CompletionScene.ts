@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
+import { costumeStepOrder } from '../../episodes/carnival-choices/costume';
 import type { OpeningChoiceId } from '../../types/gameState';
 import { addMuteControl } from '../components/MuteControl';
 import { GameButton } from '../components/GameButton';
+import { CostumeSequenceGame } from '../minigames/costume/CostumeSequenceGame';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
 
@@ -40,11 +42,11 @@ export class CompletionScene extends Phaser.Scene {
     const branch = state.openingChoice ? BRANCH_PRESENTATIONS[state.openingChoice] : undefined;
 
     this.add.image(640, 360, 'cc-club').setDisplaySize(1280, 720);
-    this.add.rectangle(640, 360, 1280, 720, 0x2d1749, 0.84);
+    this.add.rectangle(640, 360, 1280, 720, 0x2d1749, 0.88);
     this.add
-      .text(640, 145, 'Milestone 2 branch confirmed!', {
+      .text(640, 105, 'The Carnival wings are ready!', {
         fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '54px',
+        fontSize: '50px',
         fontStyle: 'bold',
         color: '#fff8dc',
         stroke: '#6d3f91',
@@ -52,40 +54,69 @@ export class CompletionScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     this.add
-      .text(640, 260, branch?.title ?? 'Opening choice pending', {
+      .text(640, 185, '★  CREATOR BADGE  ★', {
         fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '46px',
+        fontSize: '43px',
         fontStyle: 'bold',
-        color: branch?.color ?? '#ffe36e',
+        color: '#ffe36e',
       })
       .setOrigin(0.5);
     this.add
-      .text(640, 355, branch?.summary ?? 'Return to the title and begin the conversation.', {
+      .text(640, 280, 'You shaped, coloured, decorated, and attached the straps in order.', {
         fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '29px',
+        fontSize: '27px',
         color: '#fff8dc',
         align: 'center',
         wordWrap: { width: 850 },
       })
       .setOrigin(0.5);
 
-    const restart = () => {
+    this.add
+      .text(640, 370, branch ? `Your story plan stays with you: ${branch.title}` : 'Your story choice is safely remembered.', {
+        fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
+        fontSize: '28px',
+        fontStyle: 'bold',
+        color: branch?.color ?? '#fff8dc',
+        align: 'center',
+        wordWrap: { width: 900 },
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(640, 420, branch?.summary ?? '', {
+        fontFamily: 'Trebuchet MS, sans-serif',
+        fontSize: '21px',
+        color: '#fff8dc',
+        align: 'center',
+        wordWrap: { width: 900 },
+      })
+      .setOrigin(0.5);
+
+    const newStory = () => {
       this.input.enabled = false;
       this.cameras.main.fadeOut(350, 48, 23, 76);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start('TitleScene'));
     };
-    new GameButton(this, 640, 505, 'Play another choice', restart, { width: 390, height: 86, fontSize: 31 });
+    const replayCostume = () => {
+      new CostumeSequenceGame(GameStateManager.shared, costumeStepOrder).restartChallenge();
+      this.input.enabled = false;
+      this.cameras.main.fadeOut(350, 48, 23, 76);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        this.scene.start('CostumeGameScene');
+      });
+    };
+    new GameButton(this, 415, 525, 'Try the costume again', replayCostume, { width: 390, height: 82, fontSize: 28 });
+    new GameButton(this, 865, 525, 'New story', newStory, { width: 300, height: 82, fontSize: 29 });
     this.add
-      .text(640, 575, 'Press Enter to return to the title', {
+      .text(640, 600, 'Milestone 3 complete — Story Time comes in a later milestone.', {
         fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '21px',
+        fontSize: '22px',
         color: '#fff8dc',
       })
       .setOrigin(0.5);
 
     addMuteControl(this);
     const enterKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, restart);
+    enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, newStory);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => enterKey?.destroy());
     this.cameras.main.fadeIn(600, 255, 211, 71);
   }

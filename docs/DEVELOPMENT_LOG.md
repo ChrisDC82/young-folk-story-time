@@ -1,5 +1,53 @@
 # Development Log
 
+## 2026-08-17 — Milestone 3: Carnival Costume Challenge
+
+### Scope completed
+
+- Transitioned directly from each Milestone 2 opening-choice reaction into a new `CostumeGameScene`; Story Time and all later scenes remain unimplemented.
+- Added a reusable, Phaser-independent `CostumeSequenceGame` model with typed steps, slot placement, sequence evaluation, invisible attempt counting, progressive hints, board reset, and costume-only restart behavior.
+- Added four large illustrated step cards for **Shape the wings**, **Colour the wings**, **Decorate the wings**, and **Attach the straps**, with First → Next → Then → Last target slots.
+- Added mouse drag-and-drop plus single-tap placement through Phaser's unified pointer input, making the same controls available to mouse and touch devices.
+- Added gentle wobble-and-return feedback and encouraging copy for incomplete sequences. No red X, harsh buzzer, punitive wording, or visible score is used.
+- Added a subtle pulsing card-and-slot hint after two unsuccessful sequence attempts.
+- Added a successful wing-card motion, falling multicolour confetti, and a prominently animated **Creator Badge**.
+- Repurposed the existing completion scene as the Milestone 3 stopping point, showing the Creator Badge and the preserved opening branch without advancing the story.
+- Added costume-only replay behavior that clears `costumeAttempts` and `costumeCompleted` while retaining trust, cooperation, instructions, combined ideas, `usedShortcut`, and `openingChoice`.
+- Corrected the responsive shell so the full 16:9 canvas remains reachable on wide landscape phones rather than clipping the bottom card tray.
+
+### Artwork and provenance
+
+- Added the newly supplied `assets-original/lexi making wings.png` to the canonical asset record as a protected creator-supplied Young Folk original.
+- Created `public/assets/backgrounds/cc-club/lexi-making-wings.png` as a byte-for-byte runtime copy. Both files are 1672×941 RGB PNGs with the same SHA-256; no visual transformation was applied.
+- Used the artwork as the full-frame challenge backdrop so Lexi, the butterfly wings, craft table, and CC Club setting remain central to play.
+- Added no generated, downloaded, paid, trial, or externally hosted assets.
+
+### State changes
+
+- Added `costumeAttempts: number`, initially `0`. It increases once for each complete four-card sequence submission and is never displayed to the player.
+- Added `costumeCompleted: boolean`, initially `false`, set to `true` only by the correct sequence.
+- The mini-game changes no Milestone 2 narrative fields. In particular, `usedShortcut === true` is preserved without triggering the delayed strap consequence.
+
+### Automated coverage
+
+- Added eight costume-system tests covering the correct sequence, incorrect sequence reset, attempt counting, progressive hint activation, successful completion, `costumeCompleted`, narrative-state preservation, board reset, and costume-only restart behavior.
+- Updated existing state and choice expectations for the expanded typed state.
+- Full suite: 22 tests passed across 4 test files.
+
+### Validation
+
+- Strict TypeScript (`tsc --noEmit`): passed.
+- Production build (`tsc --noEmit && vite build`): passed. The existing Phaser bundle-size advisory remains non-blocking and unchanged in nature.
+- Desktop browser: mouse dragging, tap placement, gentle retry, hint activation, correct completion, confetti, Creator Badge, replay, and opening-branch presentation validated.
+- Landscape phone viewport (844×390): full canvas and card tray fit; the correct sequence completed using touch-style single-tap interactions.
+- Browser console: no warnings or errors.
+- Free/open-source dependencies added: none.
+
+### Explicitly deferred
+
+- The delayed shortcut consequence and any broken wing strap.
+- Story Time transition, Carnival exploration, steelpan gameplay, Moko Jumbies, Carnival Crisis, endings, AI, backend services, authentication, and analytics.
+
 ## 2026-08-17 — Milestone 2: Narrative Engine
 
 ### Scope completed

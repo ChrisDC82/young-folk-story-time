@@ -121,7 +121,7 @@ export class ClubScene extends Phaser.Scene {
       if (node.choices?.length) {
         this.showChoices();
       } else if (node.end) {
-        this.proceedToCompletion();
+        this.proceedToCostumeChallenge();
       } else {
         this.narrative?.advance();
         this.renderCurrentNode();
@@ -212,13 +212,13 @@ export class ClubScene extends Phaser.Scene {
     this.renderCurrentNode();
   }
 
-  private proceedToCompletion(): void {
+  private proceedToCostumeChallenge(): void {
     if (this.keyboardStage === 'transition') return;
     this.keyboardStage = 'transition';
     this.input.enabled = false;
     this.cameras.main.fadeOut(650, 255, 211, 71);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-      this.scene.start('CompletionScene');
+      this.scene.start('CostumeGameScene');
     });
   }
 }

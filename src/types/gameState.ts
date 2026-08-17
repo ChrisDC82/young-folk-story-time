@@ -8,6 +8,8 @@ export interface CarnivalGameState {
   followedInstructions: boolean;
   combinedIdeas: boolean;
   openingChoice: OpeningChoiceId | null;
+  costumeAttempts: number;
+  costumeCompleted: boolean;
 }
 
 export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
@@ -18,6 +20,8 @@ export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
   followedInstructions: false,
   combinedIdeas: false,
   openingChoice: null,
+  costumeAttempts: 0,
+  costumeCompleted: false,
 };
 
 export type CarnivalStateKey = keyof CarnivalGameState;

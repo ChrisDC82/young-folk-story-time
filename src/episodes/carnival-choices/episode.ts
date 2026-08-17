@@ -7,6 +7,7 @@ export const carnivalChoicesEpisode = {
   subtitle: 'Carnival Choices',
   assets: {
     clubBackground: '/assets/backgrounds/cc-club/cc-club-interior.png',
+    lexiMakingWings: '/assets/backgrounds/cc-club/lexi-making-wings.png',
   },
   characters: carnivalCharacters,
   openingStory: ccClubOpeningStory,

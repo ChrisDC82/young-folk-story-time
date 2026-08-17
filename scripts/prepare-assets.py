@@ -84,7 +84,12 @@ def main() -> None:
     background_target.parent.mkdir(parents=True, exist_ok=True)
     copy2(ORIGINALS / "Community Cultural Club Background.png", background_target)
 
+    costume_background_target = PUBLIC / "backgrounds" / "cc-club" / "lexi-making-wings.png"
+    costume_background_target.parent.mkdir(parents=True, exist_ok=True)
+    copy2(ORIGINALS / "lexi making wings.png", costume_background_target)
+
     print(f"Prepared {background_target.relative_to(ROOT)}")
+    print(f"Prepared {costume_background_target.relative_to(ROOT)}")
     for character_id, character in CHARACTER_POSES.items():
         with Image.open(ORIGINALS / character["source"]) as sheet:
             for pose_name, crop_box in character["poses"].items():

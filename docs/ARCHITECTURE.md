@@ -1,4 +1,4 @@
-# Narrative Architecture
+# Narrative and Mini-Game Architecture
 
 ## Milestone 2 boundaries
 
@@ -42,6 +42,8 @@ Milestone 2 state contains:
 - instructions followed
 - ideas combined
 - selected opening choice
+- costume attempts
+- costume completion
 
 These values are internal narrative variables and are never shown numerically to children.
 
@@ -49,6 +51,24 @@ These values are internal narrative variables and are never shown numerically to
 
 Conditions support equality/inequality for every state field and numeric comparisons for numeric state. Effects support typed `set` operations for every field and `add` operations only for numeric fields. This prevents invalid state changes at compile time.
 
+## Milestone 3 costume challenge
+
+```text
+ClubScene reaction
+      ↓ (shared state is retained)
+CostumeGameScene → CostumeSequenceGame → GameStateManager
+      ↓                    ↓
+Phaser cards/UI      typed sequence rules
+      ↓
+CompletionScene (Creator Badge + preserved opening branch)
+```
+
+- `src/game/minigames/costume/CostumeSequenceGame.ts` contains the reusable sequence rules and imports no Phaser code.
+- `src/episodes/carnival-choices/costume.ts` owns the episode-specific four-step order, display labels, colors, and starting shuffle.
+- `CostumeGameScene` translates mouse/touch pointer placement into model moves and owns only presentation behavior: large slots, illustrated cards, wobble/return tweens, subtle hint highlighting, confetti, and badge animation.
+- The model changes only `costumeAttempts` and `costumeCompleted`. Costume board reset retains all game state; costume restart resets only those two fields. A new story from the title still resets the complete episode state.
+- The completion scene reads the retained `openingChoice` to demonstrate scene-to-scene continuity. `usedShortcut` is intentionally preserved and has no Milestone 3 consequence.
+
 ## Deferred boundaries
 
-The engine can represent later branches, but Milestone 2 does not implement delayed consequences, mini-games, saving, ending resolution, or the later Carnival story. Those systems should consume the same state and narrative contracts in subsequent milestones.
+The engine can represent later branches, but the project does not yet implement the delayed shortcut consequence, Story Time, Carnival exploration, the steelpan mini-game, saving, ending resolution, or later Carnival scenes. Those systems should consume the same state and narrative contracts in subsequent milestones.

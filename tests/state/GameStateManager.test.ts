@@ -13,6 +13,8 @@ describe('GameStateManager', () => {
       followedInstructions: false,
       combinedIdeas: false,
       openingChoice: null,
+      costumeAttempts: 0,
+      costumeCompleted: false,
     });
   });
 
@@ -40,5 +42,7 @@ describe('GameStateManager', () => {
 
     expect(state.get('cooperation')).toBe(0);
     expect(state.get('openingChoice')).toBeNull();
+    expect(state.get('costumeAttempts')).toBe(0);
+    expect(state.get('costumeCompleted')).toBe(false);
   });
 });

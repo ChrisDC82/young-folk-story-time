@@ -40,6 +40,7 @@ export class PreloadScene extends Phaser.Scene {
     });
 
     this.load.image('cc-club', carnivalChoicesEpisode.assets.clubBackground);
+    this.load.image('lexi-making-wings', carnivalChoicesEpisode.assets.lexiMakingWings);
     Object.values(carnivalChoicesEpisode.characters).forEach((character) => {
       (Object.keys(character.assets) as CharacterExpression[]).forEach((expression) => {
         const assetPath = character.assets[expression];
