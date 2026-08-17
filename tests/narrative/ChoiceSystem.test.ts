@@ -18,6 +18,9 @@ describe('ChoiceSystem', () => {
         openingChoice: 'follow-junior',
         costumeAttempts: 0,
         costumeCompleted: false,
+        panRoundsCompleted: 0,
+        panMistakes: 0,
+        panCompleted: false,
       },
     ],
     [
@@ -32,6 +35,9 @@ describe('ChoiceSystem', () => {
         openingChoice: 'follow-angel',
         costumeAttempts: 0,
         costumeCompleted: false,
+        panRoundsCompleted: 0,
+        panMistakes: 0,
+        panCompleted: false,
       },
     ],
     [
@@ -46,6 +52,9 @@ describe('ChoiceSystem', () => {
         openingChoice: 'work-together',
         costumeAttempts: 0,
         costumeCompleted: false,
+        panRoundsCompleted: 0,
+        panMistakes: 0,
+        panCompleted: false,
       },
     ],
   ])('applies the %s opening effects exactly once', (choiceId, expectedState) => {

@@ -95,11 +95,14 @@ describe('StoryProgression', () => {
       openingChoice: null,
       costumeAttempts: 0,
       costumeCompleted: false,
+      panRoundsCompleted: 0,
+      panMistakes: 0,
+      panCompleted: false,
     });
     expect(progression.currentStage).toBe('club');
   });
 
-  it('introduces no Pan Jam or other Milestone 5 state', () => {
+  it('adds only the three requested Pan Jam fields for Milestone 5', () => {
     const keys = Object.keys(new GameStateManager().snapshot).sort();
 
     expect(keys).toEqual([
@@ -111,7 +114,24 @@ describe('StoryProgression', () => {
       'followedInstructions',
       'juniorTrust',
       'openingChoice',
+      'panCompleted',
+      'panMistakes',
+      'panRoundsCompleted',
       'usedShortcut',
     ]);
+  });
+
+  it('guards Pan Jam entry and Milestone 5 completion', () => {
+    const state = new GameStateManager();
+    const progression = new StoryProgression(state);
+    completeCostume(state, 'work-together');
+    progression.enterCostume();
+    progression.enterStoryTime();
+    progression.arriveAtCarnival();
+
+    expect(progression.enterPanJam()).toBe('pan-jam');
+    expect(() => progression.completeMilestone5()).toThrow('rounds must be complete');
+    state.applyEffects([{ key: 'panCompleted', operation: 'set', value: true }]);
+    expect(progression.completeMilestone5()).toBe('milestone-5-complete');
   });
 });

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { carnivalChoicesEpisode } from '../../episodes/carnival-choices/episode';
+import { panJamIntroDialogue } from '../../episodes/carnival-choices/panJam';
 import { carnivalArrivalDialogue, carnivalHotspots } from '../../episodes/carnival-choices/transition';
 import type { CarnivalHotspotId, CharacterDialogueLine } from '../../types/carnival';
 import { CharacterStage } from '../components/CharacterStage';
@@ -10,9 +11,10 @@ import { SceneHotspot } from '../components/SceneHotspot';
 import { AudioManager } from '../systems/AudioManager';
 import { CarnivalExperience } from '../systems/CarnivalExperience';
 import { GameStateManager } from '../systems/GameStateManager';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { StoryProgression } from '../systems/StoryProgression';
 
-type CarnivalPhase = 'arrival' | 'explore' | 'reaction' | 'complete';
+type CarnivalPhase = 'arrival' | 'explore' | 'reaction' | 'pan-intro' | 'transition';
 
 export class CarnivalScene extends Phaser.Scene {
   private characterStage?: CharacterStage;
@@ -37,7 +39,7 @@ export class CarnivalScene extends Phaser.Scene {
     this.instruction = undefined;
     this.phase = 'arrival';
     this.canContinue = false;
-    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.reducedMotion = shouldReduceMotion();
     this.experience = new CarnivalExperience(GameStateManager.shared, carnivalHotspots);
 
     const background = this.add.image(640, 360, 'carnival-background');
@@ -86,8 +88,11 @@ export class CarnivalScene extends Phaser.Scene {
       this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
     ];
     const advance = () => {
-      if (this.phase === 'arrival' || this.phase === 'reaction') this.dialogueBox?.handleKeyboardAdvance();
-      else if (this.phase === 'explore' && this.canContinue) this.completeMilestone();
+      if (this.phase === 'arrival' || this.phase === 'reaction' || this.phase === 'pan-intro') {
+        this.dialogueBox?.handleKeyboardAdvance();
+      } else if (this.phase === 'explore' && this.canContinue) {
+        this.startPanJamIntro();
+      }
     };
     enter?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
     space?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
@@ -105,16 +110,21 @@ export class CarnivalScene extends Phaser.Scene {
     });
   }
 
-  private playDialogue(lines: readonly CharacterDialogueLine[], onComplete: () => void, index = 0): void {
+  private playDialogue(
+    lines: readonly CharacterDialogueLine[],
+    onComplete: () => void,
+    index = 0,
+    phase: 'arrival' | 'pan-intro' = 'arrival',
+  ): void {
     const line = lines[index];
     if (!line) {
       onComplete();
       return;
     }
-    this.phase = 'arrival';
+    this.phase = phase;
     this.characterStage?.focus(line.characterId, line.expression);
     this.dialogueBox?.show({ speaker: line.speaker, text: line.text }, () => {
-      this.playDialogue(lines, onComplete, index + 1);
+      this.playDialogue(lines, onComplete, index + 1, phase);
     });
   }
 
@@ -149,7 +159,7 @@ export class CarnivalScene extends Phaser.Scene {
       this.hotspots.set(definition.id, hotspot);
     });
 
-    this.continueButton = new GameButton(this, 1080, 650, 'Continue  ▶', () => this.completeMilestone(), {
+    this.continueButton = new GameButton(this, 1080, 650, 'Play Pan Jam  ▶', () => this.startPanJamIntro(), {
       width: 285,
       height: 72,
       fontSize: 27,
@@ -167,7 +177,7 @@ export class CarnivalScene extends Phaser.Scene {
       this.phase = 'explore';
       this.canContinue = true;
       this.continueButton?.setEnabled(true);
-      this.instruction?.setText('Explore another sparkle, or Continue when you’re ready.');
+      this.instruction?.setText('Explore another sparkle, or play Pan Jam when you’re ready.');
     });
   }
 
@@ -211,46 +221,20 @@ export class CarnivalScene extends Phaser.Scene {
     });
   }
 
-  private completeMilestone(): void {
+  private startPanJamIntro(): void {
     if (this.phase !== 'explore' || !this.canContinue) return;
-    this.phase = 'complete';
-    StoryProgression.shared.completeMilestone4();
+    this.phase = 'pan-intro';
     this.hotspots.forEach((hotspot) => hotspot.disableInteractive().setVisible(false));
     this.continueButton?.setEnabled(false).setVisible(false);
     this.instruction?.setVisible(false);
-    const panel = this.add.container(640, 370).setDepth(110).setScale(this.reducedMotion ? 1 : 0.2).setAlpha(this.reducedMotion ? 1 : 0);
-    const shade = this.add.rectangle(0, 0, 900, 470, 0x2b1648, 0.96).setStrokeStyle(7, 0xffd34e, 1);
-    const title = this.add
-      .text(0, -145, 'Carnival Arrival Complete!', {
-        fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '48px',
-        fontStyle: 'bold',
-        color: '#fff8dc',
-        stroke: '#6d3f91',
-        strokeThickness: 7,
-      })
-      .setOrigin(0.5);
-    const message = this.add
-      .text(0, -45, 'Lexi, Angel, and Junior are ready to explore together.', {
-        fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '28px',
-        color: '#fff0a5',
-        align: 'center',
-        wordWrap: { width: 760 },
-      })
-      .setOrigin(0.5);
-    const next = this.add
-      .text(0, 35, 'Next milestone: discover the music of Pan Jam.', {
-        fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '24px',
-        color: '#fff8dc',
-      })
-      .setOrigin(0.5);
-    const titleButton = new GameButton(this, 0, 135, 'Return to title', () => {
-      this.scene.start('TitleScene');
-    }, { width: 330, height: 76, fontSize: 28 });
-    this.children.remove(titleButton);
-    panel.add([shade, title, message, next, titleButton]);
-    if (!this.reducedMotion) this.tweens.add({ targets: panel, scale: 1, alpha: 1, duration: 520, ease: 'Back.Out' });
+    this.playDialogue(panJamIntroDialogue, () => {
+      this.phase = 'transition';
+      this.input.enabled = false;
+      this.cameras.main.fadeOut(this.reducedMotion ? 100 : 520, 87, 199, 227);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        StoryProgression.shared.enterPanJam();
+        this.scene.start('PanGameScene');
+      });
+    }, 0, 'pan-intro');
   }
 }

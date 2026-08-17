@@ -20,6 +20,10 @@ export class StoryProgression {
     return this.stage === 'carnival' && this.state.get('costumeCompleted');
   }
 
+  get panJamReady(): boolean {
+    return this.stage === 'pan-jam' && this.state.get('costumeCompleted');
+  }
+
   startNewStory(): EpisodeStage {
     this.state.reset();
     this.stage = 'club';
@@ -47,6 +51,26 @@ export class StoryProgression {
   completeMilestone4(): EpisodeStage {
     if (!this.carnivalReady) throw new Error('Carnival must be ready before Milestone 4 can complete.');
     this.stage = 'milestone-4-complete';
+    return this.stage;
+  }
+
+  enterPanJam(): EpisodeStage {
+    if (!this.carnivalReady) throw new Error('Carnival arrival must be complete before Pan Jam.');
+    this.stage = 'pan-jam';
+    return this.stage;
+  }
+
+  replayPanJam(): EpisodeStage {
+    if (this.stage !== 'milestone-5-complete') throw new Error('Pan Jam can replay only after completion.');
+    this.stage = 'pan-jam';
+    return this.stage;
+  }
+
+  completeMilestone5(): EpisodeStage {
+    if (!this.panJamReady || !this.state.get('panCompleted')) {
+      throw new Error('All Pan Jam rounds must be complete before Milestone 5 can finish.');
+    }
+    this.stage = 'milestone-5-complete';
     return this.stage;
   }
 }

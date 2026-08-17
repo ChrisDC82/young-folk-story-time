@@ -5,6 +5,7 @@ import { CompletionScene } from './scenes/CompletionScene';
 import { CostumeGameScene } from './scenes/CostumeGameScene';
 import { CarnivalScene } from './scenes/CarnivalScene';
 import { PreloadScene } from './scenes/PreloadScene';
+import { PanGameScene } from './scenes/PanGameScene';
 import { StoryTimeScene } from './scenes/StoryTimeScene';
 import { TitleScene } from './scenes/TitleScene';
 
@@ -27,6 +28,7 @@ export function buildGameConfig(parent: string): Phaser.Types.Core.GameConfig {
       CompletionScene,
       StoryTimeScene,
       CarnivalScene,
+      PanGameScene,
     ],
     render: {
       antialias: true,

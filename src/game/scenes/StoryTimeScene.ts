@@ -10,6 +10,7 @@ import { DialogueBox } from '../components/DialogueBox';
 import { GameButton } from '../components/GameButton';
 import { addMuteControl } from '../components/MuteControl';
 import { AudioManager } from '../systems/AudioManager';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { StoryProgression } from '../systems/StoryProgression';
 
 type StoryTimePhase = 'dialogue' | 'ready' | 'magic' | 'journey';
@@ -35,7 +36,7 @@ export class StoryTimeScene extends Phaser.Scene {
     this.phase = 'dialogue';
     this.wakeButton = undefined;
     this.wakeHint = undefined;
-    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.reducedMotion = shouldReduceMotion();
     this.add.image(640, 360, 'cc-club').setDisplaySize(1280, 720);
     this.add
       .text(640, 48, 'The Story Pot Is Waking…', {

@@ -10,6 +10,9 @@ export interface CarnivalGameState {
   openingChoice: OpeningChoiceId | null;
   costumeAttempts: number;
   costumeCompleted: boolean;
+  panRoundsCompleted: number;
+  panMistakes: number;
+  panCompleted: boolean;
 }
 
 export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
@@ -22,6 +25,9 @@ export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
   openingChoice: null,
   costumeAttempts: 0,
   costumeCompleted: false,
+  panRoundsCompleted: 0,
+  panMistakes: 0,
+  panCompleted: false,
 };
 
 export type CarnivalStateKey = keyof CarnivalGameState;

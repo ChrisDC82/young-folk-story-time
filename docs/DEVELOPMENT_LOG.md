@@ -1,5 +1,59 @@
 # Development Log
 
+## 2026-08-17 — Milestone 5: Pan Jam
+
+### Scope completed
+
+- Continued naturally from Carnival exploration into a concise Lexi, Junior, and Angel exchange, then transitioned into **PAN JAM** without implementing any later Carnival storyline.
+- Added a tutorial with one-note and two-note demonstrations followed by deterministic 2-note, 3-note, and 4-note rounds.
+- Added four large playable pan zones—Sun, Diamond, Moon, and Heart—distinguished by position, colour, symbol, outline shape, written label, number key, illumination, and a distinct tone.
+- Added unified pointer/touch-style activation and keyboard keys 1–4, with immediate visual depression/glow and responsive synthesized sound.
+- Added positive character encouragement, incremental input comparison, no failure screen, no score, no lives, no countdown, and no punitive feedback.
+- Added a restrained or performance-enhanced musical-note/star celebration and persistent `panCompleted` Rhythm Star achievement signal.
+- Added Pan-only replay and a clear Milestone 5 Carnival endpoint; Milestone 6 content was not started.
+
+### Audio implementation
+
+- Added `SteelpanSynth`, which creates four original runtime tones with the browser Web Audio API. Each note combines sine/triangle oscillators at a fundamental plus tuned partials, a rapid exponential attack, natural layered decay, low-pass filtering, and a final gain envelope.
+- The implementation creates no audio files, downloads no samples, and contacts no API or service. It uses no external or commercial sample library.
+- Synthesis checks the existing global `AudioManager` mute state before creating or playing an audio context. Visual cues remain complete while muted or if Web Audio is unavailable.
+- These steelpan-like MVP tones are temporary and can later be replaced with creator-owned or properly licensed authentic recordings.
+
+### Adaptive difficulty and accessibility
+
+- The first missed note triggers a friendly replay; repeated difficulty slows playback from 640 ms to 740/900 ms and extends cue illumination from 380 ms to 500/650 ms.
+- After three misses on the same expected note, Lexi plays that note together with the child and advances the pattern. Repeating this assistance can complete every sequence, so rhythm difficulty never blocks the story.
+- Strong no-mistake performance slightly quickens later playback to 520 ms and increases the final lightweight celebration, without showing a numerical score.
+- Every sound has a simultaneous visible zone cue and accumulating symbol display. Pan zones never depend on colour alone.
+- Reduced motion honors `prefers-reduced-motion` and the explicit `?motion=reduce` fallback, removing scale-heavy cues and animated celebration travel while retaining lights, symbols, text, audio, state, and controls.
+
+### Artwork and provenance
+
+- Reused `assets-original/pan kids.png`, the creator-supplied 1672×941 Young Folk steelpan illustration, as the prominent Pan Jam backdrop.
+- Created `public/assets/backgrounds/carnival/pan-kids.png` as a byte-for-byte runtime copy with the same SHA-256. No supplied artwork was edited, regenerated, uploaded, or processed externally.
+- Reused the existing Carnival background and prepared Lexi, Angel, and Junior derivatives for the narrative handoff.
+
+### State and architecture
+
+- Added `panRoundsCompleted: number`, `panMistakes: number`, and `panCompleted: boolean` to the existing typed state. Rhythm Star availability is represented by `panCompleted` for later Story Card systems.
+- `SteelpanGame` and `RhythmSequence` contain deterministic, Phaser-independent rules. `PanGameScene` owns only presentation/timing/input orchestration, `PanZone` owns reusable controls, and `SteelpanSynth` owns Web Audio synthesis.
+- Pan Jam changes only its three fields. All opening choice, trust, cooperation, shortcut, instructions, combined ideas, costume attempts/completion, and Creator Badge state remain unchanged. `usedShortcut` has no Milestone 5 consequence.
+- A full new story still resets all episode state; Pan-only replay resets only the three Pan Jam fields.
+
+### Automated coverage and validation
+
+- Added 18 tests for sequence generation/validation, correct and incorrect incremental input, mistake counting, slow/long assistance, guided progress, round advancement, completion, strong performance, state preservation, Pan-only restart, guaranteed assisted completion, global mute behavior, reduced-motion fallback, and guarded flow completion.
+- Full suite: 52 tests passed across 10 test files.
+- Strict TypeScript and production build passed; the existing Phaser bundle-size advisory remains non-blocking.
+- Browser: complete Milestones 1–5 playthroughs passed for Follow Junior, Follow Angel, and Work Together. The Junior path included deliberate mistakes and assistance; the Angel path verified strong-performance celebration; the Work Together path completed at 844×390 with `?motion=reduce`.
+- Mouse/pointer, touch-style taps, keyboard, mute/unmute, visual-only note cues, Pan replay, desktop landscape, wide-phone landscape, and the Rhythm Star endpoint passed. Browser console showed no warnings or errors caused by the game.
+- Free/open-source dependencies added: none.
+
+### Explicitly deferred
+
+- Authentic creator-owned/licensed steelpan recordings.
+- Moko Jumbie emotional sequence, Angel fear storyline, broken wing strap, delayed shortcut consequence, Carnival Crisis, endings, Story Card, AI, backend, authentication, database, analytics, payments, and external services.
+
 ## 2026-08-17 — Milestone 4: Story Time Transition + Carnival Arrival
 
 ### Scope completed

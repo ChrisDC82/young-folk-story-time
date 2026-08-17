@@ -15,6 +15,9 @@ describe('GameStateManager', () => {
       openingChoice: null,
       costumeAttempts: 0,
       costumeCompleted: false,
+      panRoundsCompleted: 0,
+      panMistakes: 0,
+      panCompleted: false,
     });
   });
 
@@ -44,5 +47,7 @@ describe('GameStateManager', () => {
     expect(state.get('openingChoice')).toBeNull();
     expect(state.get('costumeAttempts')).toBe(0);
     expect(state.get('costumeCompleted')).toBe(false);
+    expect(state.get('panRoundsCompleted')).toBe(0);
+    expect(state.get('panCompleted')).toBe(false);
   });
 });

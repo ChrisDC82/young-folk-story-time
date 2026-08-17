@@ -4,4 +4,6 @@ export type EpisodeStage =
   | 'costume'
   | 'story-time'
   | 'carnival'
-  | 'milestone-4-complete';
+  | 'milestone-4-complete'
+  | 'pan-jam'
+  | 'milestone-5-complete';

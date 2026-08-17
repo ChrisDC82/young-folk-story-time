@@ -10,6 +10,7 @@ export const carnivalChoicesEpisode = {
     lexiMakingWings: '/assets/backgrounds/cc-club/lexi-making-wings.png',
     storyPot: '/assets/backgrounds/cc-club/story-pot.png',
     carnivalBackground: '/assets/backgrounds/carnival/kiddies-carnival-background.png',
+    panJamBackground: '/assets/backgrounds/carnival/pan-kids.png',
   },
   characters: carnivalCharacters,
   openingStory: ccClubOpeningStory,

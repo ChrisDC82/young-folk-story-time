@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 5 additions
+
+- Newly written deterministic Pan Jam sequence/game rules, four-zone Phaser interface, positive adaptive assistance, Rhythm Star completion, responsive input orchestration, and reduced-motion support.
+- Original runtime-generated Web Audio synthesis using oscillator fundamentals and partials, rapid attack/natural decay envelopes, filtering, and global mute integration. No audio file, sample pack, paid library, external API, or downloaded recording was used.
+- Byte-for-byte runtime copy of the pre-existing creator-supplied `pan kids.png`; protected source artwork remains unchanged.
+- Three new typed Pan Jam state fields with complete preservation of Milestones 1–4 narrative and Creator Badge state.
+- Eighteen additional automated tests plus three-branch desktop/wide-phone browser validation through the Rhythm Star endpoint.
+
 ## Milestone 4 additions
 
 - Reusable, tested Story Time/Carnival progression and Carnival exploration models, with no new narrative or Milestone 5 state.
@@ -41,4 +49,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 4, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 5, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
