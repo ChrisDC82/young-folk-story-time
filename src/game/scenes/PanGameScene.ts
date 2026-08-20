@@ -138,6 +138,7 @@ export class PanGameScene extends Phaser.Scene {
     ];
     const start = () => {
       if (this.gameModel?.snapshot.phase === 'ready' && this.readyButton) this.startExperience();
+      else if (this.gameModel?.snapshot.phase === 'complete') this.beginMokoJumbieSequence();
     };
     enter?.on(Phaser.Input.Keyboard.Events.DOWN, start);
     space?.on(Phaser.Input.Keyboard.Events.DOWN, start);
@@ -367,25 +368,42 @@ export class PanGameScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     const endpoint = this.add
-      .text(0, 91, 'The friends’ Carnival adventure continues in Milestone 6.', {
+      .text(0, 91, 'The rhythm fades—and tall Carnival figures step into view.', {
         fontFamily: 'Trebuchet MS, sans-serif',
         fontSize: '20px',
         color: '#fff8dc',
       })
       .setOrigin(0.5);
-    const replay = new GameButton(this, -205, 165, 'Play Pan Jam again', () => {
+    const replay = new GameButton(this, -290, 165, 'Play again', () => {
       this.gameModel?.restart();
       StoryProgression.shared.replayPanJam();
       this.scene.restart();
-    }, { width: 340, height: 72, fontSize: 25 });
-    const titleButton = new GameButton(this, 205, 165, 'Return to title', () => this.scene.start('TitleScene'), {
-      width: 300,
+    }, { width: 245, height: 72, fontSize: 24 });
+    const continueButton = new GameButton(this, 0, 165, 'Meet the Moko Jumbies  ▶', () => this.beginMokoJumbieSequence(), {
+      width: 340,
       height: 72,
-      fontSize: 25,
+      fontSize: 23,
+      fillColor: 0xffd34e,
+    });
+    const titleButton = new GameButton(this, 290, 165, 'Return to title', () => this.scene.start('TitleScene'), {
+      width: 245,
+      height: 72,
+      fontSize: 24,
     });
     this.children.remove(replay);
+    this.children.remove(continueButton);
     this.children.remove(titleButton);
-    panel.add([shade, badge, title, message, endpoint, replay, titleButton]);
+    panel.add([shade, badge, title, message, endpoint, replay, continueButton, titleButton]);
     if (!this.reducedMotion) this.tweens.add({ targets: panel, scale: 1, alpha: 1, duration: 540, ease: 'Back.Out' });
+  }
+
+  private beginMokoJumbieSequence(): void {
+    if (StoryProgression.shared.currentStage !== 'milestone-5-complete') return;
+    StoryProgression.shared.enterMokoJumbie();
+    this.input.enabled = false;
+    this.cameras.main.fadeOut(this.reducedMotion ? 80 : 520, 255, 211, 71);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.scene.start('MokoJumbieScene');
+    });
   }
 }

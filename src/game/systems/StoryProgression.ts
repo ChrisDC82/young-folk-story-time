@@ -24,6 +24,10 @@ export class StoryProgression {
     return this.stage === 'pan-jam' && this.state.get('costumeCompleted');
   }
 
+  get mokoJumbieReady(): boolean {
+    return this.stage === 'moko-jumbie' && this.state.get('panCompleted');
+  }
+
   startNewStory(): EpisodeStage {
     this.state.reset();
     this.stage = 'club';
@@ -71,6 +75,22 @@ export class StoryProgression {
       throw new Error('All Pan Jam rounds must be complete before Milestone 5 can finish.');
     }
     this.stage = 'milestone-5-complete';
+    return this.stage;
+  }
+
+  enterMokoJumbie(): EpisodeStage {
+    if (this.stage !== 'milestone-5-complete' || !this.state.get('panCompleted')) {
+      throw new Error('The Rhythm Star must be earned before the Moko Jumbie sequence.');
+    }
+    this.stage = 'moko-jumbie';
+    return this.stage;
+  }
+
+  completeMilestone6(): EpisodeStage {
+    if (!this.mokoJumbieReady || !this.state.get('angelMokoResponse')) {
+      throw new Error('Angel must receive a response before Milestone 6 can finish.');
+    }
+    this.stage = 'milestone-6-complete';
     return this.stage;
   }
 }

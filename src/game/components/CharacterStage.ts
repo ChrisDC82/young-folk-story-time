@@ -33,8 +33,12 @@ export class CharacterStage {
     });
   }
 
-  revealAll(): void {
+  revealAll(reducedMotion = false): void {
     this.actors.forEach((actor, id) => {
+      if (reducedMotion) {
+        actor.container.setVisible(true).setAlpha(1).setX(actor.definition.stage.x);
+        return;
+      }
       const delay = id === 'lexi' ? 0 : id === 'angel' ? 100 : 200;
       actor.container.setVisible(true).setAlpha(id === 'lexi' ? 1 : 0).setX(actor.definition.stage.x + 55);
       this.scene.tweens.add({
@@ -48,7 +52,7 @@ export class CharacterStage {
     });
   }
 
-  focus(characterId: CharacterId, expression: CharacterExpression = 'neutral'): void {
+  focus(characterId: CharacterId, expression: CharacterExpression = 'neutral', reducedMotion = false): void {
     this.actors.forEach((actor, id) => {
       const focused = id === characterId;
       actor.container.setAlpha(focused ? 1 : 0.7);
@@ -58,6 +62,7 @@ export class CharacterStage {
         this.setExpression(id, expression);
         this.scene.tweens.killTweensOf(actor.container);
         actor.container.setY(actor.definition.stage.y);
+        if (reducedMotion) return;
         this.scene.tweens.add({
           targets: actor.container,
           y: actor.definition.stage.y - 12,
@@ -74,6 +79,27 @@ export class CharacterStage {
     if (!actor) return;
     const texture = actor.definition.textures[expression] ?? actor.definition.textures.neutral;
     actor.sprite.setTexture(texture).setDisplaySize(actor.definition.stage.width, actor.definition.stage.height);
+  }
+
+  setDepth(characterId: CharacterId, depth: number): void {
+    this.actors.get(characterId)?.container.setDepth(depth);
+  }
+
+  moveTo(characterId: CharacterId, x: number, y: number, reducedMotion = false): void {
+    const actor = this.actors.get(characterId);
+    if (!actor) return;
+    this.scene.tweens.killTweensOf(actor.container);
+    if (reducedMotion) {
+      actor.container.setPosition(x, y);
+      return;
+    }
+    this.scene.tweens.add({
+      targets: actor.container,
+      x,
+      y,
+      duration: 460,
+      ease: 'Sine.InOut',
+    });
   }
 
   startIdleMotion(reducedMotion = false): void {

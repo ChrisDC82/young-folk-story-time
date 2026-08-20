@@ -1,6 +1,6 @@
 # Young Folk: Story Time — Carnival Choices
 
-Milestone 2 is a local, browser-based narrative game foundation built with Phaser, TypeScript, and Vite. It includes the Milestone 1 scene stack plus a reusable typed narrative engine, episode state, conditional choices, state effects, character expressions, automated tests, and the first branching CC Club conversation with Lexi, Angel, and Junior.
+This local browser game is built with Phaser, TypeScript, and Vite. Through Milestone 6 it includes the branching CC Club opening, Carnival Costume Challenge, Story Time transition, Carnival arrival, adaptive Pan Jam rhythm game, Rhythm Star, and a trust-sensitive Moko Jumbie emotional sequence with Lexi, Angel, and Junior.
 
 ## Requirements
 
@@ -31,9 +31,11 @@ The production output is written to `dist/`.
 
 - Tap/click the large controls, or use the displayed keyboard shortcuts.
 - Press `H` to activate the steelpan hotspot.
-- Press `1`, `2`, or `3` to select a currently available choice.
+- Press `1`–`4` for Pan Jam zones and currently available story choices.
 - Press `Enter` or `Space` to advance.
 - Press `M` or select the speaker button to mute/unmute.
+
+Pan Jam audio is synthesized locally with the browser Web Audio API. The MVP uses no downloaded recording, paid service, backend, analytics, or network API.
 
 ## Protected artwork
 

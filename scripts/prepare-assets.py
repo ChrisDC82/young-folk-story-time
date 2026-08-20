@@ -100,11 +100,16 @@ def main() -> None:
     pan_jam_background_target.parent.mkdir(parents=True, exist_ok=True)
     copy2(ORIGINALS / "pan kids.png", pan_jam_background_target)
 
+    moko_jumbie_background_target = PUBLIC / "backgrounds" / "carnival" / "kiddies-carnival-scene.png"
+    moko_jumbie_background_target.parent.mkdir(parents=True, exist_ok=True)
+    copy2(ORIGINALS / "Kiddies Carnival scene.png", moko_jumbie_background_target)
+
     print(f"Prepared {background_target.relative_to(ROOT)}")
     print(f"Prepared {costume_background_target.relative_to(ROOT)}")
     print(f"Prepared {story_pot_target.relative_to(ROOT)}")
     print(f"Prepared {carnival_background_target.relative_to(ROOT)}")
     print(f"Prepared {pan_jam_background_target.relative_to(ROOT)}")
+    print(f"Prepared {moko_jumbie_background_target.relative_to(ROOT)}")
     for character_id, character in CHARACTER_POSES.items():
         with Image.open(ORIGINALS / character["source"]) as sheet:
             for pose_name, crop_box in character["poses"].items():

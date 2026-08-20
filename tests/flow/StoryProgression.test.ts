@@ -98,21 +98,31 @@ describe('StoryProgression', () => {
       panRoundsCompleted: 0,
       panMistakes: 0,
       panCompleted: false,
+      offeredToStayWithAngel: false,
+      askedAngelWhatWasWrong: false,
+      askedForHelp: false,
+      dismissedAngelFear: false,
+      angelMokoResponse: null,
     });
     expect(progression.currentStage).toBe('club');
   });
 
-  it('adds only the three requested Pan Jam fields for Milestone 5', () => {
+  it('contains only the implemented typed state through Milestone 6', () => {
     const keys = Object.keys(new GameStateManager().snapshot).sort();
 
     expect(keys).toEqual([
+      'angelMokoResponse',
       'angelTrust',
+      'askedAngelWhatWasWrong',
+      'askedForHelp',
       'combinedIdeas',
       'cooperation',
       'costumeAttempts',
       'costumeCompleted',
+      'dismissedAngelFear',
       'followedInstructions',
       'juniorTrust',
+      'offeredToStayWithAngel',
       'openingChoice',
       'panCompleted',
       'panMistakes',
@@ -133,5 +143,23 @@ describe('StoryProgression', () => {
     expect(() => progression.completeMilestone5()).toThrow('rounds must be complete');
     state.applyEffects([{ key: 'panCompleted', operation: 'set', value: true }]);
     expect(progression.completeMilestone5()).toBe('milestone-5-complete');
+  });
+
+  it('guards the Moko Jumbie scene and Milestone 6 endpoint', () => {
+    const state = new GameStateManager();
+    const progression = new StoryProgression(state);
+    completeCostume(state, 'follow-angel');
+    progression.enterCostume();
+    progression.enterStoryTime();
+    progression.arriveAtCarnival();
+    progression.enterPanJam();
+    state.applyEffects([{ key: 'panCompleted', operation: 'set', value: true }]);
+    progression.completeMilestone5();
+
+    expect(progression.enterMokoJumbie()).toBe('moko-jumbie');
+    expect(progression.mokoJumbieReady).toBe(true);
+    expect(() => progression.completeMilestone6()).toThrow('must receive a response');
+    state.applyEffects([{ key: 'angelMokoResponse', operation: 'set', value: 'staying-close' }]);
+    expect(progression.completeMilestone6()).toBe('milestone-6-complete');
   });
 });

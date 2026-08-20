@@ -6,4 +6,6 @@ export type EpisodeStage =
   | 'carnival'
   | 'milestone-4-complete'
   | 'pan-jam'
-  | 'milestone-5-complete';
+  | 'milestone-5-complete'
+  | 'moko-jumbie'
+  | 'milestone-6-complete';

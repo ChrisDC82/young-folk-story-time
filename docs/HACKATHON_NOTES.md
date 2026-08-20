@@ -16,6 +16,15 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 6 additions
+
+- Newly written episode-owned Moko Jumbie reveal dialogue, four emotional choices, trust-dependent Angel disclosure, supportive/defensive/help-seeking reactions, and a deliberate pre-crisis endpoint built on the existing typed narrative engine.
+- Five typed emotional-state fields plus guarded scene progression, with complete retention of Milestones 1–5 state and no shortcut consequence, broken strap, Carnival Crisis, or ending.
+- Reusable character depth/movement presentation for Angel’s retreat behind Lexi, large pointer/touch/keyboard choice controls, reduced-motion behavior, and global mute access.
+- Byte-for-byte runtime copy of the pre-existing creator-supplied `Kiddies Carnival scene.png`; protected source artwork remains unchanged.
+- Cultural wording checked against public National Carnival Commission and NALIS traditional-mas references. No cultural media, audio, asset, API, or paid service was imported.
+- Twelve additional automated test cases, full local browser validation, and no new dependency.
+
 ## Milestone 5 additions
 
 - Newly written deterministic Pan Jam sequence/game rules, four-zone Phaser interface, positive adaptive assistance, Rhythm Star completion, responsive input orchestration, and reduced-motion support.
@@ -49,4 +58,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 5, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 6, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.

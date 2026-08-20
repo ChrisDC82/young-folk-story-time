@@ -44,6 +44,7 @@ export class PreloadScene extends Phaser.Scene {
     this.load.image('story-pot', carnivalChoicesEpisode.assets.storyPot);
     this.load.image('carnival-background', carnivalChoicesEpisode.assets.carnivalBackground);
     this.load.image('pan-jam-background', carnivalChoicesEpisode.assets.panJamBackground);
+    this.load.image('moko-jumbie-background', carnivalChoicesEpisode.assets.mokoJumbieBackground);
     Object.values(carnivalChoicesEpisode.characters).forEach((character) => {
       (Object.keys(character.assets) as CharacterExpression[]).forEach((expression) => {
         const assetPath = character.assets[expression];

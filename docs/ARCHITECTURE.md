@@ -33,7 +33,7 @@ Phaser scene + reusable UI/character components
 
 The shared `GameStateManager` instance is reset when a new story starts from the title screen. It is not reset during Phaser scene transitions, so the Completion scene can resolve the selected branch. Tests can construct non-shared managers for complete isolation.
 
-Milestone 2 state contains:
+The current typed state through Milestone 6 contains:
 
 - Angel trust
 - Junior trust
@@ -47,6 +47,11 @@ Milestone 2 state contains:
 - Pan Jam rounds completed
 - Pan Jam mistakes
 - Pan Jam completion / Rhythm Star availability
+- offer to stay with Angel
+- whether Lexi asked what was wrong
+- whether Lexi asked Junior for help
+- whether Angel’s fear was dismissed
+- Angel’s typed Moko Jumbie response outcome
 
 These values are internal narrative variables and are never shown numerically to children.
 
@@ -101,16 +106,35 @@ PanGameScene → SteelpanGame → RhythmSequence
       ↓
 SteelpanSynth (Web Audio + global mute)
       ↓
-Rhythm Star / Milestone 5 Carnival endpoint
+ Rhythm Star / Milestone 5 handoff
 ```
 
 - `src/episodes/carnival-choices/panJam.ts` owns the character handoff, four zone identities/frequencies, tutorial patterns, and generated round plan.
 - `RhythmSequence` produces deterministic episode sequences with no immediate repeated zone. `SteelpanGame` owns incremental comparison, round progression, mistakes, timing assistance, guided-note completion, strong-performance pacing, and Pan-only restart without importing Phaser.
 - `PanGameScene` schedules visual/audio playback and maps mouse, touch-style pointer, and keyboard input into the model. `PanZone` provides large controls distinguished by symbol, text, number, position, outline, colour, and illumination.
-- `SteelpanSynth` generates short steelpan-like tones at runtime with three oscillator partials, gain envelopes, and a low-pass filter. It never downloads audio and checks global mute before creating or sounding Web Audio.
+- `SteelpanSynth` generates short steelpan-like tones at runtime with a brief high-frequency strike plus five inharmonic body partials, independent decay envelopes, separate strike/body filtering, and a fast master attack. It never downloads audio and checks global mute before creating or sounding Web Audio.
 - `MotionPreference` centralizes the OS media preference plus a `?motion=reduce` fallback. Reduced motion changes presentation only and never alters game rules or state.
 - Only `panRoundsCompleted`, `panMistakes`, and `panCompleted` change. All Milestones 1–4 state remains in the same shared `GameStateManager`; `panCompleted` is the later Story Card’s Rhythm Star signal.
 
+## Milestone 6 Moko Jumbie emotional sequence
+
+```text
+Rhythm Star / Milestone 5 complete
+        ↓ StoryProgression.enterMokoJumbie()
+MokoJumbieScene → mokoJumbieStory → NarrativeEngine
+        ↓                 ↓                 ↓
+character behavior   conditional choices   ChoiceSystem
+        ↓                                   ↓
+temporary pre-crisis endpoint ← typed GameStateManager effects
+```
+
+- `src/episodes/carnival-choices/mokoJumbie.ts` owns the reveal conversation, four player-facing response labels, two conditionally exclusive versions of the same “What is making you uncomfortable?” choice, effects, and response nodes.
+- The existing `NarrativeEngine` exposes exactly four available choices: trust ≥ 1 selects the more honest “They too tall.” branch; lower trust selects the guarded branch. No engine fork or scene-owned dialogue rules are needed.
+- `MokoJumbieScene` owns only presentation and input orchestration: unchanged parade artwork, reveal lighting, large 2×2 choices, pointer/touch and keyboard input, expressions, Angel’s movement behind Lexi, mute access, reduced motion, and the temporary endpoint.
+- `StoryProgression` guards entry on `panCompleted` and guards Milestone 6 completion on a non-null `angelMokoResponse`.
+- Only the selected choice’s intended trust/cooperation effect and the five Milestone 6 fields can change. All prior branch, shortcut, costume, Creator Badge, Pan Jam, and Rhythm Star state remains in the shared manager.
+- The Junior explanation is concise episode content based on National Carnival Commission and NALIS descriptions of the Moko Jumbie as a traditional masquerader balancing and dancing on tall stilts.
+
 ## Deferred boundaries
 
-The engine can represent later branches, but the project does not yet implement the Moko Jumbie emotional sequence, Angel fear choices, delayed shortcut consequence, broken wing strap, Carnival Crisis, saving, ending resolution, Story Card, or later Carnival story branches. Those systems should consume the same state and narrative contracts in subsequent milestones.
+The engine can represent later branches, but the project does not yet implement the delayed shortcut consequence, broken wing strap, Carnival Crisis, later Angel resolution, saving, ending resolution, Story Card, or later Carnival story branches. Those systems should consume the same state and narrative contracts in subsequent milestones.

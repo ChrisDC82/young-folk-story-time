@@ -1,0 +1,178 @@
+import type { StoryChoice, StoryDefinition } from '../../types/narrative';
+
+export const mokoJumbieChoices = [
+  {
+    id: 'dismiss-angel-fear',
+    label: 'There’s nothing to be scared of.',
+    confirmation: 'Lexi tries to make the worry feel smaller.',
+    next: 'angel-defensive',
+    effects: [
+      { key: 'angelTrust', operation: 'add', value: -1 },
+      { key: 'dismissedAngelFear', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'defensive' },
+    ],
+  },
+  {
+    id: 'stay-with-angel',
+    label: 'Want me to stay with you?',
+    confirmation: 'Lexi offers quiet company without pushing Angel closer.',
+    next: 'angel-stays-close',
+    effects: [
+      { key: 'angelTrust', operation: 'add', value: 1 },
+      { key: 'offeredToStayWithAngel', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'staying-close' },
+    ],
+  },
+  {
+    id: 'ask-angel-high-trust',
+    label: 'What is making you uncomfortable?',
+    confirmation: 'Lexi makes room for Angel to explain.',
+    next: 'angel-shares-height-fear',
+    conditions: [{ key: 'angelTrust', operator: 'greater-than-or-equal', value: 1 }],
+    effects: [
+      { key: 'askedAngelWhatWasWrong', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'shared-height-fear' },
+    ],
+  },
+  {
+    id: 'ask-angel-low-trust',
+    label: 'What is making you uncomfortable?',
+    confirmation: 'Lexi asks gently, but Angel is not ready to say much.',
+    next: 'angel-withholds-fear',
+    conditions: [{ key: 'angelTrust', operator: 'less-than', value: 1 }],
+    effects: [
+      { key: 'askedAngelWhatWasWrong', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'withheld-fear' },
+    ],
+  },
+  {
+    id: 'ask-junior-for-help',
+    label: 'Junior, can you help us?',
+    confirmation: 'Lexi asks Junior to share what he knows.',
+    next: 'junior-explains',
+    effects: [
+      { key: 'cooperation', operation: 'add', value: 1 },
+      { key: 'askedForHelp', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'accepted-explanation' },
+    ],
+  },
+] satisfies StoryChoice[];
+
+export const mokoJumbieStory: StoryDefinition = {
+  id: 'moko-jumbie-emotional-sequence',
+  startNodeId: 'rhythm-fades',
+  nodes: {
+    'rhythm-fades': {
+      id: 'rhythm-fades',
+      speaker: 'lexi',
+      expression: 'excited',
+      text: 'The last Pan Jam note is still sparkling—look who is stepping into the parade!',
+      next: 'lexi-wonder',
+    },
+    'lexi-wonder': {
+      id: 'lexi-wonder',
+      speaker: 'lexi',
+      expression: 'excited',
+      text: 'Moko Jumbies! They are so tall, bright, and graceful!',
+      next: 'junior-calm',
+    },
+    'junior-calm': {
+      id: 'junior-calm',
+      speaker: 'junior',
+      expression: 'happy',
+      text: 'Their long, balanced steps are remarkable. I would like to watch from here.',
+      next: 'angel-steps-back',
+    },
+    'angel-steps-back': {
+      id: 'angel-steps-back',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'Carnival has plenty other things to see. We could look over there instead.',
+      next: 'lexi-calls-angel',
+    },
+    'lexi-calls-angel': {
+      id: 'lexi-calls-angel',
+      speaker: 'lexi',
+      expression: 'thinking',
+      text: 'Angel?',
+      next: 'angel-what',
+    },
+    'angel-what': {
+      id: 'angel-what',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'What?',
+      next: 'lexi-notices-hiding',
+    },
+    'lexi-notices-hiding': {
+      id: 'lexi-notices-hiding',
+      speaker: 'lexi',
+      expression: 'thinking',
+      text: 'You’re hiding.',
+      next: 'angel-strategic',
+    },
+    'angel-strategic': {
+      id: 'angel-strategic',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'I am strategically standing somewhere else.',
+      next: 'lexi-emotional-choice',
+    },
+    'lexi-emotional-choice': {
+      id: 'lexi-emotional-choice',
+      speaker: 'lexi',
+      expression: 'thinking',
+      text: 'Angel is keeping some distance. What should Lexi say?',
+      choices: mokoJumbieChoices,
+    },
+    'angel-defensive': {
+      id: 'angel-defensive',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'I said I’m not scared. I just do not need anybody telling me how to feel.',
+      end: true,
+    },
+    'angel-stays-close': {
+      id: 'angel-stays-close',
+      speaker: 'angel',
+      expression: 'happy',
+      text: 'You could stay. I can watch from right here beside you.',
+      end: true,
+    },
+    'angel-shares-height-fear': {
+      id: 'angel-shares-height-fear',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'They too tall.',
+      next: 'lexi-respects-distance',
+    },
+    'lexi-respects-distance': {
+      id: 'lexi-respects-distance',
+      speaker: 'lexi',
+      expression: 'happy',
+      text: 'Okay. We can watch from here. You do not have to go closer.',
+      end: true,
+    },
+    'angel-withholds-fear': {
+      id: 'angel-withholds-fear',
+      speaker: 'angel',
+      expression: 'thinking',
+      text: 'Nothing. I just do not feel like going closer.',
+      end: true,
+    },
+    'junior-explains': {
+      id: 'junior-explains',
+      speaker: 'junior',
+      expression: 'thinking',
+      text: 'Moko Jumbies are traditional Carnival masqueraders. They dance and make long, balanced strides on tall stilts.',
+      next: 'angel-accepts-explanation',
+    },
+    'angel-accepts-explanation': {
+      id: 'angel-accepts-explanation',
+      speaker: 'angel',
+      expression: 'happy',
+      text: 'So they are performing? All right. I can stay here and watch.',
+      end: true,
+    },
+  },
+};

@@ -1,5 +1,12 @@
 export type OpeningChoiceId = 'follow-junior' | 'follow-angel' | 'work-together';
 
+export type AngelMokoResponse =
+  | 'defensive'
+  | 'staying-close'
+  | 'shared-height-fear'
+  | 'withheld-fear'
+  | 'accepted-explanation';
+
 export interface CarnivalGameState {
   angelTrust: number;
   juniorTrust: number;
@@ -13,6 +20,11 @@ export interface CarnivalGameState {
   panRoundsCompleted: number;
   panMistakes: number;
   panCompleted: boolean;
+  offeredToStayWithAngel: boolean;
+  askedAngelWhatWasWrong: boolean;
+  askedForHelp: boolean;
+  dismissedAngelFear: boolean;
+  angelMokoResponse: AngelMokoResponse | null;
 }
 
 export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
@@ -28,6 +40,11 @@ export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
   panRoundsCompleted: 0,
   panMistakes: 0,
   panCompleted: false,
+  offeredToStayWithAngel: false,
+  askedAngelWhatWasWrong: false,
+  askedForHelp: false,
+  dismissedAngelFear: false,
+  angelMokoResponse: null,
 };
 
 export type CarnivalStateKey = keyof CarnivalGameState;

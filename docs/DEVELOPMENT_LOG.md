@@ -1,5 +1,51 @@
 # Development Log
 
+## 2026-08-20 — Milestone 6: Moko Jumbie emotional sequence
+
+### Scope completed
+
+- Continued directly from the Rhythm Star panel into a lightweight Moko Jumbie parade reveal, then paused at a deliberate pre-crisis endpoint.
+- Added episode-owned dialogue for Lexi’s wonder, Junior’s calm interest, Angel stepping behind Lexi, the “Angel?” / “What?” / “You’re hiding.” / “I am strategically standing somewhere else.” exchange, four emotional responses, trust-dependent disclosure, and visibly different reactions.
+- Reused the existing typed `NarrativeEngine`, `ChoiceSystem`, story conditions, and state effects. No parallel dialogue or branching system was added.
+- Added large 2×2 pointer/touch choice controls, keyboard keys 1–4, continued global mute access, a wide-phone-safe layout, and reduced-motion fallbacks for the reveal, camera push, character entrance, and endpoint motion.
+- Angel’s unease is communicated through her retreat behind Lexi, expression, dialogue, and response text rather than colour alone. The scene treats the Moko Jumbies as exciting, skilled Carnival masqueraders—not monsters or a threat.
+
+### Emotional choice outcomes
+
+- **There’s nothing to be scared of:** Angel trust −1, `dismissedAngelFear = true`, `angelMokoResponse = defensive`.
+- **Want me to stay with you?:** Angel trust +1, `offeredToStayWithAngel = true`, `angelMokoResponse = staying-close`.
+- **What is making you uncomfortable?:** `askedAngelWhatWasWrong = true`; Angel says “They too tall.” at trust ≥ 1, while lower trust produces a more guarded answer.
+- **Junior, can you help us?:** cooperation +1, `askedForHelp = true`, and Junior explains that Moko Jumbies are traditional Carnival masqueraders who dance and take long balanced strides on tall stilts.
+- The cultural explanation was checked against the National Carnival Commission and NALIS descriptions of the traditional mas character.
+
+### State and architecture
+
+- Added only five Milestone 6 fields: `offeredToStayWithAngel`, `askedAngelWhatWasWrong`, `askedForHelp`, `dismissedAngelFear`, and typed `angelMokoResponse`.
+- Preserved opening choice, Angel/Junior trust except for the selected intended trust effect, cooperation except for asking Junior, shortcut, instructions, combined ideas, costume attempts/completion, Creator Badge signal, Pan rounds/mistakes/completion, and Rhythm Star signal.
+- Added guarded `moko-jumbie` and `milestone-6-complete` progression stages. The endpoint requires an emotional response but does not trigger a Crisis or resolve Angel’s feelings completely.
+- Extended `CharacterStage` with reusable depth and movement controls so Angel can retreat behind Lexi without hard-coding sprite internals in the scene.
+
+### Artwork and provenance
+
+- Reused protected `assets-original/Kiddies Carnival scene.png` as the prominent full-frame Moko Jumbie reveal.
+- Created `public/assets/backgrounds/carnival/kiddies-carnival-scene.png` as a byte-for-byte runtime copy with the same 1672×941 dimensions and SHA-256. No protected original was changed.
+- Reused existing Lexi, Angel, and Junior derivatives; no new character extraction or external asset was required.
+
+### Automated coverage and validation
+
+- Added tests for all four choices, Angel trust increase/decrease, cooperation, every new flag, both high- and low-trust disclosure, all three opening-branch state snapshots, guarded scene progression, full-story reset, and the absence of Carnival Crisis/broken-wing state.
+- Full suite: 65 tests passed across 11 test files.
+- Strict TypeScript: passed.
+- Production build: passed. The longstanding non-blocking Phaser bundle-size advisory remains unchanged in nature.
+- Browser: complete Milestones 1–6 playthroughs passed for Follow Junior, Follow Angel, and Work Together, covering all four emotional responses. The ask-Angel path was checked at both low and high trust; high trust displayed “They too tall.” and low trust remained guarded.
+- Desktop 1280×720 normal-motion and wide-phone 844×390 reduced-motion layouts passed. Keyboard, pointer/touch-style taps, all four Pan zones, muted visual Pan cues, Moko choice controls, Angel’s retreat behind Lexi, dialogue progression, and the temporary endpoint remained reachable.
+- A fresh final browser session showed no console warnings or errors. The revised Pan Jam synthesis triggered all four distinct pitches with the sharper strike/inharmonic ringing profile and simultaneous visual cues.
+- Free/open-source dependencies added: none.
+
+### Explicitly deferred
+
+- Delayed shortcut consequence, broken wing strap, Carnival Crisis, later emotional resolution, endings, Story Card, AI, backend, authentication, database, analytics, payments, and external services.
+
 ## 2026-08-20 — Pan Jam steelpan synthesis polish
 
 ### Scope completed

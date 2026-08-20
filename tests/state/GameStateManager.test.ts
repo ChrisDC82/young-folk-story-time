@@ -18,6 +18,11 @@ describe('GameStateManager', () => {
       panRoundsCompleted: 0,
       panMistakes: 0,
       panCompleted: false,
+      offeredToStayWithAngel: false,
+      askedAngelWhatWasWrong: false,
+      askedForHelp: false,
+      dismissedAngelFear: false,
+      angelMokoResponse: null,
     });
   });
 
@@ -49,5 +54,6 @@ describe('GameStateManager', () => {
     expect(state.get('costumeCompleted')).toBe(false);
     expect(state.get('panRoundsCompleted')).toBe(0);
     expect(state.get('panCompleted')).toBe(false);
+    expect(state.get('angelMokoResponse')).toBeNull();
   });
 });
