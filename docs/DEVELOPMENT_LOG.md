@@ -1,5 +1,15 @@
 # Development Log
 
+## 2026-08-20 — Pan Jam steelpan synthesis polish
+
+### Scope completed
+
+- Kept the existing four Pan Jam zones, pitches, pointer/touch and keyboard controls, visible note cues, adaptive assistance, state, Rhythm Star, and global mute behavior unchanged.
+- Reworked the original browser Web Audio tone from three nearly harmonic partials into a short high-frequency mallet-like strike plus five independently decaying body partials with intentionally inharmonic ratios.
+- Tightened the attack to 3 ms, added separate high-pass filtering for the strike and low-pass filtering for the resonant body, and varied partial decay so the note rings like struck metal without becoming a sustained piano-like tone.
+- Added a synthesis-profile test covering the brief strike transient and inharmonic ringing structure.
+- No audio file, recording, download, dependency, paid tool, API, trial, or external service was added.
+
 ## 2026-08-17 — Milestone 5: Pan Jam
 
 ### Scope completed
