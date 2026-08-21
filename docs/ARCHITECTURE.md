@@ -33,7 +33,7 @@ Phaser scene + reusable UI/character components
 
 The shared `GameStateManager` instance is reset when a new story starts from the title screen. It is not reset during Phaser scene transitions, so the Completion scene can resolve the selected branch. Tests can construct non-shared managers for complete isolation.
 
-The current typed state through Milestone 6 contains:
+The current typed state through Milestone 7 contains:
 
 - Angel trust
 - Junior trust
@@ -52,6 +52,11 @@ The current typed state through Milestone 6 contains:
 - whether Lexi asked Junior for help
 - whether Angel’s fear was dismissed
 - Angel’s typed Moko Jumbie response outcome
+- whether the Carnival Crisis has triggered
+- whether Lexi’s wing fastening came loose or a nearby costume problem occurred
+- whether the response blamed someone, repaired together, or asked for crisis help
+- whether Angel admitted the earlier shortcut and which crisis choice was selected
+- repair attempts and crisis resolution
 
 These values are internal narrative variables and are never shown numerically to children.
 
@@ -135,6 +140,28 @@ temporary pre-crisis endpoint ← typed GameStateManager effects
 - Only the selected choice’s intended trust/cooperation effect and the five Milestone 6 fields can change. All prior branch, shortcut, costume, Creator Badge, Pan Jam, and Rhythm Star state remains in the shared manager.
 - The Junior explanation is concise episode content based on National Carnival Commission and NALIS descriptions of the Moko Jumbie as a traditional masquerader balancing and dancing on tall stilts.
 
+## Milestone 7 Carnival Crisis and repair
+
+```text
+Milestone 6 emotional endpoint (all prior state retained)
+        ↓ StoryProgression.enterCarnivalCrisis()
+CarnivalCrisisScene → shortcutCrisisStory / nonShortcutCrisisStory
+        ↓                         ↓
+four conditional choices    typed GameStateManager effects
+        ↓
+CarnivalCrisisRepair (Phaser-independent)
+        ↓ choose fastener → three presses → crisisResolved
+branch-specific exchange → temporary Milestone 8 continuation point
+```
+
+- `src/episodes/carnival-choices/crisis.ts` owns both crisis stories, the three shared choices, the shortcut-only trust-dependent Angel question, repair-material definitions, and post-repair dialogue. `usedShortcut` selects either Lexi’s loose wing fastening or the nearby masquerader’s costume problem; the careful branch never invents a failure of Lexi’s wings.
+- Angel’s disclosure uses the existing typed narrative conditions. Trust of at least one permits the direct admission only when her earlier fear was not dismissed; low trust or a prior dismissal selects a hesitant response that still proceeds to repair.
+- `src/game/minigames/crisis/CarnivalCrisisRepair.ts` imports no Phaser code. It validates crisis entry, counts material selections, activates assistance after two unsuccessful attempts, requires the safety clip, tracks three securing presses, sets only `crisisResolved` on completion, and supports local reset/restart without clearing branch or earlier-story state.
+- `CarnivalCrisisScene` is the presentation/orchestration layer. It reuses existing artwork and character-expression mappings, draws the branch problem and repair interface in Phaser, maps pointer/touch and keyboard input to the model, and provides gentle wobble/hint feedback, mute, reduced motion, readable dialogue, responsive positioning, and non-audio completion cues.
+- `StoryProgression` guards crisis entry after Milestone 6 and guards the temporary `milestone-7-complete` endpoint until a crisis choice exists and the repair is resolved. It does not implement an ending or Angel’s final decision.
+- New typed state is limited to `crisisTriggered`, `wingStrapBroke`, `nearbyCostumeProblem`, `blamedSomeone`, `repairedMistakeTogether`, `askedForCrisisHelp`, `angelAdmittedShortcut`, `crisisChoice`, `crisisResolved`, and `repairAttempts`. The shared manager retains every valid opening, costume, badge, Pan Jam, and Moko Jumbie value across the scene.
+- No new dependency, API, service, audio file, commercial asset, runtime image, or asset derivative was required.
+
 ## Deferred boundaries
 
-The engine can represent later branches, but the project does not yet implement the delayed shortcut consequence, broken wing strap, Carnival Crisis, later Angel resolution, saving, ending resolution, Story Card, or later Carnival story branches. Those systems should consume the same state and narrative contracts in subsequent milestones.
+The engine can represent later branches, but the project does not yet implement Angel’s final Carnival decision, ending resolution, the four planned endings, the final Story Card/badge summary, AI reflection, saving, backend services, authentication, database storage, or analytics. Those systems should consume the same state and narrative contracts in Milestone 8 or later without replacing the completed crisis architecture.

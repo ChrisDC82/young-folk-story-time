@@ -150,11 +150,16 @@ describe('Moko Jumbie emotional sequence', () => {
     });
   });
 
-  it('does not introduce or trigger Carnival Crisis state', () => {
+  it('does not trigger Carnival Crisis state before the Milestone 7 transition', () => {
     const state = milestoneFiveState();
     reachEmotionalChoice(state).choose('stay-with-angel');
 
-    expect(Object.keys(state.snapshot)).not.toContain('carnivalCrisisTriggered');
-    expect(Object.keys(state.snapshot)).not.toContain('wingStrapBroken');
+    expect(state.snapshot).toMatchObject({
+      crisisTriggered: false,
+      wingStrapBroke: false,
+      nearbyCostumeProblem: false,
+      crisisChoice: null,
+      crisisResolved: false,
+    });
   });
 });

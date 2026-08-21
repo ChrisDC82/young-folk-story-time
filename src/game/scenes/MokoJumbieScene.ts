@@ -108,7 +108,7 @@ export class MokoJumbieScene extends Phaser.Scene {
     ];
     const advance = () => {
       if (this.phase === 'dialogue' || this.phase === 'response') this.dialogueBox?.handleKeyboardAdvance();
-      else if (this.phase === 'complete') this.scene.start('TitleScene');
+      else if (this.phase === 'complete') this.beginCarnivalCrisis();
     };
     enter?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
     space?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
@@ -243,7 +243,7 @@ export class MokoJumbieScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     const endpoint = this.add
-      .text(0, 45, 'The Carnival story pauses here. Angel’s feelings can keep unfolding later.', {
+      .text(0, 35, 'The parade moves on—and an earlier choice is about to matter.', {
         fontFamily: 'Trebuchet MS, sans-serif',
         fontSize: '22px',
         color: '#fff8dc',
@@ -251,13 +251,25 @@ export class MokoJumbieScene extends Phaser.Scene {
         wordWrap: { width: 760 },
       })
       .setOrigin(0.5);
-    const titleButton = new GameButton(this, 0, 135, 'Return to title', () => this.scene.start('TitleScene'), {
-      width: 330,
+    const continueButton = new GameButton(this, 0, 125, 'Continue with the parade  ▶', () => this.beginCarnivalCrisis(), {
+      width: 390,
       height: 78,
-      fontSize: 28,
+      fontSize: 26,
+      fillColor: 0xffd34e,
     });
-    this.children.remove(titleButton);
-    panel.add([shade, title, message, endpoint, titleButton]);
+    this.children.remove(continueButton);
+    panel.add([shade, title, message, endpoint, continueButton]);
     if (!this.reducedMotion) this.tweens.add({ targets: panel, alpha: 1, scale: 1, duration: 440, ease: 'Back.Out' });
+  }
+
+  private beginCarnivalCrisis(): void {
+    if (this.phase !== 'complete' || StoryProgression.shared.currentStage !== 'milestone-6-complete') return;
+    this.phase = 'response';
+    StoryProgression.shared.enterCarnivalCrisis();
+    this.input.enabled = false;
+    this.cameras.main.fadeOut(this.reducedMotion ? 80 : 520, 255, 211, 71);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.scene.start('CarnivalCrisisScene');
+    });
   }
 }

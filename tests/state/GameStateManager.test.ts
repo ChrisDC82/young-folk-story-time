@@ -23,6 +23,16 @@ describe('GameStateManager', () => {
       askedForHelp: false,
       dismissedAngelFear: false,
       angelMokoResponse: null,
+      crisisTriggered: false,
+      wingStrapBroke: false,
+      nearbyCostumeProblem: false,
+      blamedSomeone: false,
+      repairedMistakeTogether: false,
+      askedForCrisisHelp: false,
+      angelAdmittedShortcut: false,
+      crisisChoice: null,
+      crisisResolved: false,
+      repairAttempts: 0,
     });
   });
 
@@ -55,5 +65,7 @@ describe('GameStateManager', () => {
     expect(state.get('panRoundsCompleted')).toBe(0);
     expect(state.get('panCompleted')).toBe(false);
     expect(state.get('angelMokoResponse')).toBeNull();
+    expect(state.get('crisisTriggered')).toBe(false);
+    expect(state.get('crisisResolved')).toBe(false);
   });
 });

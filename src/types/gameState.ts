@@ -7,6 +7,8 @@ export type AngelMokoResponse =
   | 'withheld-fear'
   | 'accepted-explanation';
 
+export type CrisisChoiceId = 'blame' | 'repair-together' | 'ask-for-help' | 'ask-angel';
+
 export interface CarnivalGameState {
   angelTrust: number;
   juniorTrust: number;
@@ -25,6 +27,16 @@ export interface CarnivalGameState {
   askedForHelp: boolean;
   dismissedAngelFear: boolean;
   angelMokoResponse: AngelMokoResponse | null;
+  crisisTriggered: boolean;
+  wingStrapBroke: boolean;
+  nearbyCostumeProblem: boolean;
+  blamedSomeone: boolean;
+  repairedMistakeTogether: boolean;
+  askedForCrisisHelp: boolean;
+  angelAdmittedShortcut: boolean;
+  crisisChoice: CrisisChoiceId | null;
+  crisisResolved: boolean;
+  repairAttempts: number;
 }
 
 export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
@@ -45,6 +57,16 @@ export const INITIAL_CARNIVAL_GAME_STATE: Readonly<CarnivalGameState> = {
   askedForHelp: false,
   dismissedAngelFear: false,
   angelMokoResponse: null,
+  crisisTriggered: false,
+  wingStrapBroke: false,
+  nearbyCostumeProblem: false,
+  blamedSomeone: false,
+  repairedMistakeTogether: false,
+  askedForCrisisHelp: false,
+  angelAdmittedShortcut: false,
+  crisisChoice: null,
+  crisisResolved: false,
+  repairAttempts: 0,
 };
 
 export type CarnivalStateKey = keyof CarnivalGameState;

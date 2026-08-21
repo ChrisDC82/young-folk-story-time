@@ -103,31 +103,51 @@ describe('StoryProgression', () => {
       askedForHelp: false,
       dismissedAngelFear: false,
       angelMokoResponse: null,
+      crisisTriggered: false,
+      wingStrapBroke: false,
+      nearbyCostumeProblem: false,
+      blamedSomeone: false,
+      repairedMistakeTogether: false,
+      askedForCrisisHelp: false,
+      angelAdmittedShortcut: false,
+      crisisChoice: null,
+      crisisResolved: false,
+      repairAttempts: 0,
     });
     expect(progression.currentStage).toBe('club');
   });
 
-  it('contains only the implemented typed state through Milestone 6', () => {
+  it('contains only the implemented typed state through Milestone 7', () => {
     const keys = Object.keys(new GameStateManager().snapshot).sort();
 
     expect(keys).toEqual([
+      'angelAdmittedShortcut',
       'angelMokoResponse',
       'angelTrust',
       'askedAngelWhatWasWrong',
+      'askedForCrisisHelp',
       'askedForHelp',
+      'blamedSomeone',
       'combinedIdeas',
       'cooperation',
       'costumeAttempts',
       'costumeCompleted',
+      'crisisChoice',
+      'crisisResolved',
+      'crisisTriggered',
       'dismissedAngelFear',
       'followedInstructions',
       'juniorTrust',
+      'nearbyCostumeProblem',
       'offeredToStayWithAngel',
       'openingChoice',
       'panCompleted',
       'panMistakes',
       'panRoundsCompleted',
+      'repairAttempts',
+      'repairedMistakeTogether',
       'usedShortcut',
+      'wingStrapBroke',
     ]);
   });
 
@@ -161,5 +181,32 @@ describe('StoryProgression', () => {
     expect(() => progression.completeMilestone6()).toThrow('must receive a response');
     state.applyEffects([{ key: 'angelMokoResponse', operation: 'set', value: 'staying-close' }]);
     expect(progression.completeMilestone6()).toBe('milestone-6-complete');
+  });
+
+  it('guards Carnival Crisis entry and Milestone 7 completion', () => {
+    const state = new GameStateManager();
+    const progression = new StoryProgression(state);
+    completeCostume(state, 'follow-angel');
+    progression.enterCostume();
+    progression.enterStoryTime();
+    progression.arriveAtCarnival();
+    progression.enterPanJam();
+    state.applyEffects([
+      { key: 'panCompleted', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'staying-close' },
+    ]);
+    progression.completeMilestone5();
+    progression.enterMokoJumbie();
+    progression.completeMilestone6();
+
+    expect(progression.enterCarnivalCrisis()).toBe('carnival-crisis');
+    expect(progression.carnivalCrisisReady).toBe(true);
+    expect(() => progression.completeMilestone7()).toThrow('choice and repair must be complete');
+    state.applyEffects([
+      { key: 'crisisTriggered', operation: 'set', value: true },
+      { key: 'crisisChoice', operation: 'set', value: 'repair-together' },
+      { key: 'crisisResolved', operation: 'set', value: true },
+    ]);
+    expect(progression.completeMilestone7()).toBe('milestone-7-complete');
   });
 });

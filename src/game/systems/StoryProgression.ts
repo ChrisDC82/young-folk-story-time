@@ -28,6 +28,10 @@ export class StoryProgression {
     return this.stage === 'moko-jumbie' && this.state.get('panCompleted');
   }
 
+  get carnivalCrisisReady(): boolean {
+    return this.stage === 'carnival-crisis' && Boolean(this.state.get('angelMokoResponse'));
+  }
+
   startNewStory(): EpisodeStage {
     this.state.reset();
     this.stage = 'club';
@@ -91,6 +95,27 @@ export class StoryProgression {
       throw new Error('Angel must receive a response before Milestone 6 can finish.');
     }
     this.stage = 'milestone-6-complete';
+    return this.stage;
+  }
+
+  enterCarnivalCrisis(): EpisodeStage {
+    if (this.stage !== 'milestone-6-complete' || !this.state.get('angelMokoResponse')) {
+      throw new Error('The Moko Jumbie response must be complete before the Carnival Crisis.');
+    }
+    this.stage = 'carnival-crisis';
+    return this.stage;
+  }
+
+  completeMilestone7(): EpisodeStage {
+    if (
+      !this.carnivalCrisisReady ||
+      !this.state.get('crisisTriggered') ||
+      !this.state.get('crisisChoice') ||
+      !this.state.get('crisisResolved')
+    ) {
+      throw new Error('The Carnival Crisis choice and repair must be complete before Milestone 7 can finish.');
+    }
+    this.stage = 'milestone-7-complete';
     return this.stage;
   }
 }

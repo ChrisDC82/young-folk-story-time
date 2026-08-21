@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 7 additions
+
+- Newly written episode-owned shortcut and non-shortcut Carnival Crisis stories, three shared choices, a conditional fourth Angel-disclosure choice, trust/emotional-history-dependent responses, branch-specific post-repair dialogue, and a temporary Milestone 8 continuation point.
+- Ten typed crisis-state fields with complete preservation of opening, trust, cooperation, costume, badge, Pan Jam, and Moko Jumbie state. The delayed shortcut consequence is now implemented without falsely breaking Lexi’s wings on careful non-shortcut paths.
+- Reusable Phaser-independent `CarnivalCrisisRepair` rules for three-material selection, invisible attempt counting, subtle assistance after two unsuccessful selections, a three-press safety-clip interaction, completion, and repair-only reset/restart behavior.
+- A newly written Phaser presentation using the existing Carnival background, costume illustration, and character derivatives with code-drawn problem/repair visuals, gentle feedback, large pointer/touch/keyboard controls, mute, reduced motion, and responsive landscape layouts.
+- Eighteen additional tests and complete local browser validation. No dependency, API, paid service, credit, trial, commercial asset, external audio, new runtime image, or asset derivative was introduced.
+
 ## Milestone 6 additions
 
 - Newly written episode-owned Moko Jumbie reveal dialogue, four emotional choices, trust-dependent Angel disclosure, supportive/defensive/help-seeking reactions, and a deliberate pre-crisis endpoint built on the existing typed narrative engine.
@@ -58,4 +66,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 6, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 7, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.

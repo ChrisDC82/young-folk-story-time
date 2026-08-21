@@ -1,5 +1,46 @@
 # Development Log
 
+## 2026-08-20 — Milestone 7: Carnival Crisis and delayed shortcut consequence
+
+### Scope completed
+
+- Continued from the Milestone 6 Moko Jumbie endpoint into a guarded Carnival Crisis scene without resetting Angel’s emotional response or any earlier narrative, costume, Pan Jam, Creator Badge, or Rhythm Star state.
+- Implemented the delayed consequence: when `usedShortcut` is true, Lexi’s butterfly-wing fastening comes loose and the dialogue connects the missed fastening step to Angel’s earlier shortcut.
+- Implemented a non-punitive non-shortcut branch: when `usedShortcut` is false, Lexi’s properly assembled wings remain secure and a nearby masquerader instead needs help with a loose shoulder decoration.
+- Added three shared child-facing crisis choices—ask whose fault it is, fix it together, or ask someone for help—plus the shortcut-only “Angel, tell me what happened.” choice.
+- Resolved the immediate costume problem, showed branch-appropriate contributions and reactions from Lexi, Angel, and Junior, and stopped at a temporary continuation point for Milestone 8 without deciding Angel’s final Carnival outcome or any ending.
+
+### Trust, choices, and state
+
+- Angel admits “I skipped one of the steps.” when trust is at least one and her earlier fear was not dismissed; Lexi responds “Thanks for telling me.” Low-trust or previously dismissive paths let Angel hesitate without blocking the repair.
+- The blame choice records tension without changing cooperation. Fixing together sets `repairedMistakeTogether` and increases cooperation by one. Asking for help preserves any earlier `askedForHelp` history and also sets the crisis-specific `askedForCrisisHelp` flag.
+- Added only the typed crisis state required by the implemented branches and repair: `crisisTriggered`, `wingStrapBroke`, `nearbyCostumeProblem`, `blamedSomeone`, `repairedMistakeTogether`, `askedForCrisisHelp`, `angelAdmittedShortcut`, `crisisChoice`, `crisisResolved`, and `repairAttempts`.
+- Full-story reset clears all crisis state. Local repair reset/restart behavior does not overwrite the selected crisis branch or any valid Milestones 1–6 state.
+
+### Repair architecture and accessibility
+
+- Added a reusable Phaser-independent `CarnivalCrisisRepair` model for material selection, attempt counting, assistance, fastening progress, completion, and repair-only reset/restart behavior.
+- The player chooses among three illustrated materials. After two unsuccessful selections, the safety clip receives a subtle visual hint; unsuitable materials gently wobble and remain available rather than producing a failure screen.
+- Selecting the safety clip begins a three-press fastening interaction. Completion updates `crisisResolved`, displays a cheerful visual finish, and leads into a short post-crisis exchange.
+- `CarnivalCrisisScene` provides large controls, pointer/touch-style input, number keys, Enter/Space progression, global mute access, reduced-motion fallbacks, readable dialogue, and desktop/wide-landscape-phone layouts. No narrative fact or repair step depends on sound or facial expression alone.
+
+### Artwork, cost, and provenance
+
+- Reused the existing unchanged Carnival background, `lexi-making-wings.png` runtime copy, and prepared Lexi, Angel, and Junior expression derivatives. The wing/fastening, alternate costume issue, repair tools, and completion effects are code-drawn at runtime.
+- No original or runtime asset file was changed, and no new asset derivative was created.
+- No dependency, API, backend, hosted service, paid service, purchased credit, expiring trial, commercial asset, external audio, or paid hosting requirement was introduced.
+
+### Automated coverage and validation
+
+- Added 18 tests, bringing the suite to 83 passing tests across 13 files. Coverage includes both crisis triggers, high/low/previously-dismissed Angel disclosure, all four choices, cooperation and help effects, prior-state preservation, reset behavior, repair attempts, assistance, three-press completion, and guarded scene progression.
+- Strict TypeScript checking passed.
+- Production build passed with only the existing Phaser chunk-size advisory.
+- Browser validation passed the complete shortcut and non-shortcut routes, high- and low-trust paths, all crisis choices, repair assistance/completion, desktop and wide-phone layouts, keyboard, mouse, touch-style pointer, mute, reduced motion, and console checks.
+
+### Explicitly deferred
+
+- Angel’s final Carnival decision, ending resolver, four endings, final Story Card/badge summary, AI reflection, backend, authentication, database, analytics, and all Milestone 8 work.
+
 ## 2026-08-20 — Milestone 6: Moko Jumbie emotional sequence
 
 ### Scope completed
