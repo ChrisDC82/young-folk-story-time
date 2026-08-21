@@ -1,5 +1,34 @@
 # Development Log
 
+## 2026-08-20 — Milestone 9: visual, audio, UX, and presentation polish
+
+### Scope completed
+
+- Completed a full-game consistency review from the title and CC Club through the costume challenge, Creator Badge, Story Time, Carnival exploration, Pan Jam, Rhythm Star, Moko Jumbies, Carnival Crisis, repair, endings, Story Card, and replay without changing story content or gameplay rules.
+- Strengthened the shared `GameButton` interaction treatment: pointer exits now restore scale, pressed/hovered states remain visually clear, selected choices retain full contrast while disabled for confirmation, and every button keeps at least an 82×logical-pixel interactive height even when a smaller visual height was requested.
+- Enlarged the persistent mute control’s interactive area and added clear hover/press feedback. Added a visible canvas focus outline for keyboard users.
+- Increased Story Card accomplishment, badge-detail, reflection, control, and footer typography for comfortable landscape-phone reading while retaining the same card content and achievement logic.
+
+### Motion, feedback, and accessibility
+
+- Extended the existing reduced-motion preference through the title, CC Club, costume challenge, Creator Badge handoff, Story Time character presentation, and Carnival character presentation. Dialogue now changes state immediately rather than sliding when reduced motion is requested.
+- The costume challenge now replaces card travel, wobble, pulsing hints, falling confetti, card bounce, and badge scaling with immediate placement/return, a steady hint, a small static celebration, and an immediate badge panel. Reduced-motion feedback delays are shortened without changing attempts, hints, completion, or state.
+- Normal-motion feedback remains brief and child-friendly. Important outcomes continue to use text, shape, symbols, borders, and visible state changes rather than depending on motion, colour, or audio alone.
+- Verified mouse, pointer/touch-style interaction, keyboard shortcuts, persistent mute, normal motion, explicit `?motion=reduce`, replay, 1280×720 desktop, 844×390 wide landscape phone, and 740×360 narrower landscape phone presentation.
+
+### Audio and Pan Jam review
+
+- Reviewed the existing four-channel `AudioManager`, persistent mute path, synthesized Pan Jam note definitions, transient/ringing partial profile, scene cleanup, and repeated-note timing. No audio defect or new sound asset was needed.
+- Preserved the four distinct code-generated notes, immediate visual strike feedback, Web Audio synthesis architecture, mute-before-context behavior, and scene-shutdown synth cleanup unchanged.
+- No music, recording, commercial sound, paid library, hosted audio, API, dependency, or service was added.
+
+### Validation and boundaries
+
+- All 94 automated tests across 14 files pass, including all four endings, story/state progression, crisis branching, repair, costume and Pan Jam rules, Story Card, replay/reset, mute persistence, and motion preference coverage.
+- Strict TypeScript checking and the production build pass. The build continues to report only the accepted Phaser bundle-size advisory; no code splitting or dependency change was introduced solely to suppress it.
+- Browser QA passed representative normal- and reduced-motion full-game routes, desktop and two landscape-phone sizes, mouse/keyboard/touch-style pointer input, muted and unmuted states, Story Card replay, and clean console checks.
+- No narrative data, ending priority, state field, mini-game rule, dependency, package file, protected original, runtime asset, or derivative was changed. Milestone 10 deployment and submission work remains deferred.
+
 ## 2026-08-20 — Milestone 8: endings, Story Card, and replay
 
 ### Scope completed

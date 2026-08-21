@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 9 additions
+
+- Polished the existing presentation rather than creating new story or gameplay content: shared button selection/press feedback, child-friendly minimum interaction targets, mute feedback, canvas focus visibility, reduced-motion-safe dialogue, consistent character motion handling, and more readable Story Card typography.
+- Extended reduced-motion behavior through the earlier title, CC Club, costume, completion, Story Time, and Carnival presentation. The costume game keeps the same rules while substituting immediate card state changes, a steady hint, and a small static success treatment for nonessential motion.
+- Reviewed the four-channel audio manager and code-generated steelpan profile. The four distinct notes, persistent mute, Web Audio behavior, and cleanup remained correct, so no new recording, audio file, audio library, or synthesis redesign was introduced.
+- Browser QA covered the full journey and representative ending route in normal and reduced motion, desktop, 844×390 and 740×360 landscape phones, mouse, keyboard, touch-style pointer input, mute, replay, and clean console checks. The existing 94-test suite, strict TypeScript check, and production build pass.
+- Reused every existing Young Folk source/runtime image unchanged. No derivative, dependency, API, backend, hosted service, paid service, purchased credit, expiring trial, subscription, commercial asset, or personal-data feature was added.
+
 ## Milestone 8 additions
 
 - Newly written episode-owned dialogue and reflections for Together on the Road, One Little Step, We Fixed It, and CC Club Team, preserving the four names and priority previously established in the game design.

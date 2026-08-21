@@ -12,6 +12,7 @@ import { addMuteControl } from '../components/MuteControl';
 import { CostumeSequenceGame } from '../minigames/costume/CostumeSequenceGame';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 
 interface SlotDisplay {
   center: Phaser.Math.Vector2;
@@ -27,6 +28,7 @@ export class CostumeGameScene extends Phaser.Scene {
   private slots: SlotDisplay[] = [];
   private instruction?: Phaser.GameObjects.Text;
   private interactionLocked = false;
+  private reducedMotion = false;
 
   constructor() {
     super('CostumeGameScene');
@@ -36,6 +38,7 @@ export class CostumeGameScene extends Phaser.Scene {
     this.cards.clear();
     this.slots = [];
     this.interactionLocked = false;
+    this.reducedMotion = shouldReduceMotion();
     AudioManager.shared.bind(this);
     this.gameModel = new CostumeSequenceGame(GameStateManager.shared, costumeStepOrder);
 
@@ -64,8 +67,8 @@ export class CostumeGameScene extends Phaser.Scene {
     this.createSlots();
     this.createCards();
     addMuteControl(this);
-    this.cameras.main.fadeIn(650, 255, 211, 71);
-    this.time.delayedCall(450, () => this.updateHint());
+    this.cameras.main.fadeIn(this.reducedMotion ? 80 : 650, 255, 211, 71);
+    this.time.delayedCall(this.reducedMotion ? 80 : 450, () => this.updateHint());
   }
 
   private createSlots(): void {
@@ -100,6 +103,7 @@ export class CostumeGameScene extends Phaser.Scene {
         step,
         (droppedCard) => this.handleDrop(droppedCard),
         (tappedCard) => this.handleTap(tappedCard),
+        this.reducedMotion,
       );
       this.cards.set(stepId, card);
     });
@@ -138,7 +142,7 @@ export class CostumeGameScene extends Phaser.Scene {
         card.wobbleAndReturn(delay);
         delay += 45;
       });
-      this.time.delayedCall(820, () => {
+      this.time.delayedCall(this.reducedMotion ? 160 : 820, () => {
         this.interactionLocked = false;
         this.cards.forEach((card) => card.setEnabled(true));
         this.instruction?.setText('Which step belongs First? The cards are ready for another try.');
@@ -151,7 +155,7 @@ export class CostumeGameScene extends Phaser.Scene {
       this.interactionLocked = true;
       this.cards.forEach((card) => card.setEnabled(false).setHint(false));
       this.instruction?.setText('You made the wings step by step!');
-      this.time.delayedCall(280, () => this.celebrate());
+      this.time.delayedCall(this.reducedMotion ? 80 : 280, () => this.celebrate());
       return;
     }
 
@@ -221,39 +225,48 @@ export class CostumeGameScene extends Phaser.Scene {
 
   private celebrate(): void {
     const colors = [0xffd34e, 0xf49ac2, 0x57c7e3, 0x79d18b, 0xa676d2];
-    for (let index = 0; index < 48; index += 1) {
+    const confettiCount = this.reducedMotion ? 10 : 48;
+    for (let index = 0; index < confettiCount; index += 1) {
       const confetti = this.add
         .rectangle(
           Phaser.Math.Between(50, 1230),
-          Phaser.Math.Between(-120, -10),
+          this.reducedMotion ? Phaser.Math.Between(90, 650) : Phaser.Math.Between(-120, -10),
           Phaser.Math.Between(7, 14),
           Phaser.Math.Between(14, 26),
           Phaser.Utils.Array.GetRandom(colors),
         )
         .setDepth(90)
         .setAngle(Phaser.Math.Between(-30, 30));
+      if (!this.reducedMotion) {
+        this.tweens.add({
+          targets: confetti,
+          y: Phaser.Math.Between(420, 760),
+          x: `+=${Phaser.Math.Between(-80, 80)}`,
+          angle: Phaser.Math.Between(240, 600),
+          duration: Phaser.Math.Between(1500, 2600),
+          delay: Phaser.Math.Between(0, 500),
+          ease: 'Sine.In',
+          onComplete: () => confetti.destroy(),
+        });
+      }
+    }
+
+    if (!this.reducedMotion) {
       this.tweens.add({
-        targets: confetti,
-        y: Phaser.Math.Between(420, 760),
-        x: `+=${Phaser.Math.Between(-80, 80)}`,
-        angle: Phaser.Math.Between(240, 600),
-        duration: Phaser.Math.Between(1500, 2600),
-        delay: Phaser.Math.Between(0, 500),
-        ease: 'Sine.In',
-        onComplete: () => confetti.destroy(),
+        targets: [...this.cards.values()],
+        y: '-=10',
+        duration: 360,
+        yoyo: true,
+        repeat: 2,
+        ease: 'Sine.InOut',
       });
     }
 
-    this.tweens.add({
-      targets: [...this.cards.values()],
-      y: '-=10',
-      duration: 360,
-      yoyo: true,
-      repeat: 2,
-      ease: 'Sine.InOut',
-    });
-
-    const panel = this.add.container(640, 410).setDepth(100).setScale(0.15).setAlpha(0);
+    const panel = this.add
+      .container(640, 410)
+      .setDepth(100)
+      .setScale(this.reducedMotion ? 1 : 0.15)
+      .setAlpha(this.reducedMotion ? 1 : 0);
     const shade = this.add.rectangle(0, -50, 780, 400, 0x2b1648, 0.96).setStrokeStyle(7, 0xffd34e, 1);
     const badge = this.add.graphics();
     badge.fillStyle(0xffd34e, 1);
@@ -284,13 +297,15 @@ export class CostumeGameScene extends Phaser.Scene {
       .setOrigin(0.5);
     const continueButton = new GameButton(this, 0, 137, 'Keep my badge  ★', () => {
       this.input.enabled = false;
-      this.cameras.main.fadeOut(450, 255, 211, 71);
+      this.cameras.main.fadeOut(this.reducedMotion ? 80 : 450, 255, 211, 71);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
         this.scene.start('CompletionScene');
       });
     }, { width: 350, height: 70, fontSize: 27 });
     this.children.remove(continueButton);
     panel.add([shade, badge, badgeTitle, message, continueButton]);
-    this.tweens.add({ targets: panel, scale: 1, alpha: 1, duration: 560, ease: 'Back.Out' });
+    if (!this.reducedMotion) {
+      this.tweens.add({ targets: panel, scale: 1, alpha: 1, duration: 560, ease: 'Back.Out' });
+    }
   }
 }

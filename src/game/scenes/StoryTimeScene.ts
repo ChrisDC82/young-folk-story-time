@@ -56,7 +56,7 @@ export class StoryTimeScene extends Phaser.Scene {
       junior: { x: 535, y: 450, width: 135, height: 235 },
     });
     this.characterStage.showLead('lexi');
-    this.characterStage.revealAll();
+    this.characterStage.revealAll(this.reducedMotion);
     this.dialogueBox = new DialogueBox(this);
     addMuteControl(this);
     this.registerKeyboard();
@@ -88,7 +88,7 @@ export class StoryTimeScene extends Phaser.Scene {
       return;
     }
     this.phase = 'dialogue';
-    this.characterStage?.focus(line.characterId, line.expression);
+    this.characterStage?.focus(line.characterId, line.expression, this.reducedMotion);
     this.dialogueBox?.show({ speaker: line.speaker, text: line.text }, () => {
       this.playDialogue(lines, onComplete, index + 1);
     });

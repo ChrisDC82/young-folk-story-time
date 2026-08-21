@@ -10,6 +10,7 @@ interface GameButtonOptions {
 }
 
 export class GameButton extends Phaser.GameObjects.Container {
+  private static readonly minimumTouchHeight = 82;
   private readonly background: Phaser.GameObjects.Graphics;
   private readonly label: Phaser.GameObjects.Text;
   private readonly buttonWidth: number;
@@ -17,6 +18,7 @@ export class GameButton extends Phaser.GameObjects.Container {
   private readonly fillColor: number;
   private readonly hoverColor: number;
   private enabled = true;
+  private selected = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -47,7 +49,7 @@ export class GameButton extends Phaser.GameObjects.Container {
       .setOrigin(0.5);
 
     this.add([this.background, this.label]);
-    this.setSize(this.buttonWidth, this.buttonHeight);
+    this.setSize(this.buttonWidth, Math.max(this.buttonHeight, GameButton.minimumTouchHeight));
     this.setInteractive({ useHandCursor: true });
     this.draw(this.fillColor, false);
 
@@ -55,7 +57,8 @@ export class GameButton extends Phaser.GameObjects.Container {
       if (this.enabled) this.draw(this.hoverColor, true);
     });
     this.on(Phaser.Input.Events.POINTER_OUT, () => {
-      if (this.enabled) this.draw(this.fillColor, false);
+      this.setScale(1);
+      if (this.enabled) this.draw(this.selected ? 0x58d68d : this.fillColor, false);
     });
     this.on(Phaser.Input.Events.POINTER_DOWN, () => {
       if (this.enabled) this.setScale(0.97);
@@ -63,6 +66,7 @@ export class GameButton extends Phaser.GameObjects.Container {
     this.on(Phaser.Input.Events.POINTER_UP, () => {
       if (!this.enabled) return;
       this.setScale(1);
+      this.draw(this.hoverColor, true);
       onActivate();
     });
   }
@@ -75,12 +79,14 @@ export class GameButton extends Phaser.GameObjects.Container {
   setEnabled(enabled: boolean): this {
     this.enabled = enabled;
     enabled ? this.setInteractive({ useHandCursor: true }) : this.disableInteractive();
-    this.setAlpha(enabled ? 1 : 0.55);
+    this.setAlpha(enabled || this.selected ? 1 : 0.55);
     return this;
   }
 
   setSelected(selected: boolean): this {
+    this.selected = selected;
     this.draw(selected ? 0x58d68d : this.fillColor, selected);
+    if (selected) this.setAlpha(1);
     return this;
   }
 

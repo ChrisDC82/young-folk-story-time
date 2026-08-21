@@ -20,8 +20,17 @@ export function addMuteControl(scene: Phaser.Scene): Phaser.GameObjects.Containe
   };
 
   container.add([background, label]);
-  container.setSize(68, 68).setInteractive({ useHandCursor: true });
-  container.on(Phaser.Input.Events.POINTER_UP, toggle);
+  container.setSize(82, 82).setInteractive({ useHandCursor: true });
+  container.on(Phaser.Input.Events.POINTER_OVER, () => background.setStrokeStyle(5, 0xffd34e, 1));
+  container.on(Phaser.Input.Events.POINTER_OUT, () => {
+    container.setScale(1);
+    background.setStrokeStyle(3, 0xfff4c2, 1);
+  });
+  container.on(Phaser.Input.Events.POINTER_DOWN, () => container.setScale(0.94));
+  container.on(Phaser.Input.Events.POINTER_UP, () => {
+    container.setScale(1);
+    toggle();
+  });
   refresh();
 
   const muteKey = scene.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.M);

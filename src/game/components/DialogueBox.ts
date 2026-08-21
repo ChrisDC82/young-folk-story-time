@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { DialogueLine } from '../../types/dialogue';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { GameButton } from './GameButton';
 
 export class DialogueBox extends Phaser.GameObjects.Container {
@@ -51,8 +52,13 @@ export class DialogueBox extends Phaser.GameObjects.Container {
     this.speakerText.setText(line.speaker);
     this.bodyText.setText(line.text);
     this.advanceHandler = onAdvance;
-    this.setVisible(true).setAlpha(0);
-    this.scene.tweens.add({ targets: this, alpha: 1, y: 552, duration: 260, ease: 'Back.Out' });
+    this.scene.tweens.killTweensOf(this);
+    if (shouldReduceMotion()) {
+      this.setVisible(true).setAlpha(1).setY(552);
+    } else {
+      this.setVisible(true).setAlpha(0);
+      this.scene.tweens.add({ targets: this, alpha: 1, y: 552, duration: 260, ease: 'Back.Out' });
+    }
   }
 
   handleKeyboardAdvance(): void {
@@ -63,6 +69,11 @@ export class DialogueBox extends Phaser.GameObjects.Container {
     if (!this.visible || !this.advanceHandler) return;
     const callback = this.advanceHandler;
     this.advanceHandler = undefined;
+    if (shouldReduceMotion()) {
+      this.setVisible(false).setAlpha(0).setY(570);
+      callback();
+      return;
+    }
     this.scene.tweens.add({
       targets: this,
       alpha: 0,

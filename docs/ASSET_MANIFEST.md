@@ -87,6 +87,12 @@ Inventory completed on 2026-08-17 and updated after Milestone 8. All supplied fi
 - The final Story Card, Creator Badge summary, Rhythm Star summary, ending badge seals, buttons, borders, and optional celebration sparkles are code-drawn Phaser presentation. They are not saved asset derivatives.
 - No supplied original, runtime image, character derivative, audio file, external asset, commercial asset, asset service, paid tool, API, or hosted service was added or changed for Milestone 8.
 
+## Milestone 9 asset reuse (no new runtime files)
+
+- The visual consistency and responsive pass reuses the complete existing runtime asset set unchanged across the title, CC Club, costume challenge, Story Time, Carnival, Pan Jam, Moko Jumbie, Carnival Crisis, endings, and Story Card.
+- Story Card typography, button feedback, mute feedback, focus indication, reduced-motion alternatives, costume hints, and celebrations remain code-drawn presentation. They do not create saved image or audio derivatives.
+- Every file in `assets-original/` and `public/assets/` remains unchanged. No new runtime image, derivative, audio file, external asset, commercial asset, paid tool, API, hosted service, or asset-processing step was introduced for Milestone 9.
+
 ## Derivative preparation method
 
 The preparation procedure is reproducible in `scripts/prepare-assets.py` and writes only to `public/assets/`. Full-frame backgrounds are copied without transformation. For character extraction, it:

@@ -187,6 +187,28 @@ StoryProgression.startNewStory() → reset run state → ClubScene
 - `StoryProgression` guards entry after `milestone-7-complete`, marks the Story Card as `milestone-8-complete`, and reuses `startNewStory()` for replay. That method resets `GameStateManager` and the scene stage but does not reset the separate application-level `AudioManager` mute preference.
 - No new dependency, API, service, audio file, commercial asset, runtime image, or asset derivative was required.
 
+## Milestone 9 presentation polish
+
+Milestone 9 preserves the completed narrative, state, mini-game, resolver, Story Card, and scene-progression architecture. Its changes remain in the Phaser presentation layer and shared presentation components:
+
+```text
+existing scene rules and episode data (unchanged)
+                    ↓
+GameButton + MuteControl + DialogueBox + CharacterStage
+                    ↓
+consistent input feedback, safe targets, and motion preferences
+                    ↓
+scene-specific Story Card readability and costume celebration polish
+```
+
+- `GameButton` now guarantees an 82-logical-pixel minimum interactive height, restores scale on pointer exit, and preserves selected-state contrast. Individual scenes retain their established visual dimensions and callbacks.
+- `MuteControl` uses the same child-friendly minimum target principle and clearer pointer feedback. CSS adds a visible focus outline to the Phaser canvas without altering game scaling.
+- `DialogueBox` reads the existing centralized motion preference and replaces entrance/exit movement with immediate visible state changes in reduced-motion mode.
+- Title, CC Club, costume, completion, Story Time, and Carnival presentation now consistently pass or apply the existing reduced-motion preference. Costume cards support immediate placement/return and steady hints; the completion still communicates success through a static badge panel and code-drawn celebration.
+- `EndingScene` retains the same `StoryCardData` and badge layout architecture while using larger accomplishment and badge-detail typography for wide and narrower landscape phones.
+- The four-channel `AudioManager`, synthesized `SteelpanSynth`, persistent mute state, scene-level synth shutdown, and all episode-owned note definitions remain unchanged after review; no audio defect required an architectural modification.
+- No state field, narrative condition, ending rule, mini-game model, dependency, asset, derivative, API, paid service, or Milestone 10 system was introduced.
+
 ## Deferred boundaries
 
-The playable narrative arc is complete through the four endings and Story Card. Deferred work is limited to Milestone 9 visual/audio polish, later release-candidate and hackathon-submission preparation, AI reflection, saving, backend services, authentication, database storage, analytics, deployment, and other explicitly later scope. Later work should preserve the completed resolver, Story Card, replay, and Milestones 1–8 state contracts.
+The playable narrative arc and Milestone 9 presentation pass are complete through the four endings and Story Card. Deferred work is limited to Milestone 10 release-candidate and hackathon-submission preparation, AI reflection, saving, backend services, authentication, database storage, analytics, deployment, and other explicitly later scope. Later work should preserve the completed resolver, Story Card, replay, and Milestones 1–9 presentation and state contracts.

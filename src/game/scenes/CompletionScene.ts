@@ -6,6 +6,7 @@ import { GameButton } from '../components/GameButton';
 import { CostumeSequenceGame } from '../minigames/costume/CostumeSequenceGame';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { StoryProgression } from '../systems/StoryProgression';
 
 interface BranchPresentation {
@@ -39,6 +40,7 @@ export class CompletionScene extends Phaser.Scene {
 
   create(): void {
     AudioManager.shared.bind(this);
+    const reducedMotion = shouldReduceMotion();
     const state = GameStateManager.shared.snapshot;
     const branch = state.openingChoice ? BRANCH_PRESENTATIONS[state.openingChoice] : undefined;
 
@@ -95,14 +97,14 @@ export class CompletionScene extends Phaser.Scene {
     const storyTime = () => {
       StoryProgression.shared.enterStoryTime();
       this.input.enabled = false;
-      this.cameras.main.fadeOut(450, 255, 214, 77);
+      this.cameras.main.fadeOut(reducedMotion ? 80 : 450, 255, 214, 77);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start('StoryTimeScene'));
     };
     const replayCostume = () => {
       new CostumeSequenceGame(GameStateManager.shared, costumeStepOrder).restartChallenge();
       StoryProgression.shared.enterCostume();
       this.input.enabled = false;
-      this.cameras.main.fadeOut(350, 48, 23, 76);
+      this.cameras.main.fadeOut(reducedMotion ? 80 : 350, 48, 23, 76);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
         this.scene.start('CostumeGameScene');
       });
@@ -126,6 +128,6 @@ export class CompletionScene extends Phaser.Scene {
     const enterKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, storyTime);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => enterKey?.destroy());
-    this.cameras.main.fadeIn(600, 255, 211, 71);
+    this.cameras.main.fadeIn(reducedMotion ? 80 : 600, 255, 211, 71);
   }
 }

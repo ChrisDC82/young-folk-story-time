@@ -11,6 +11,7 @@ import { addMuteControl } from '../components/MuteControl';
 import { AudioManager } from '../systems/AudioManager';
 import { GameStateManager } from '../systems/GameStateManager';
 import { NarrativeEngine } from '../systems/NarrativeEngine';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { StoryProgression } from '../systems/StoryProgression';
 
 type KeyboardStage = 'explore' | 'dialogue' | 'choices' | 'selected' | 'transition';
@@ -26,6 +27,7 @@ export class ClubScene extends Phaser.Scene {
   private instructionText?: Phaser.GameObjects.Text;
   private choicePanel?: Phaser.GameObjects.Container;
   private keyboardStage: KeyboardStage = 'explore';
+  private reducedMotion = false;
 
   constructor() {
     super('ClubScene');
@@ -37,6 +39,7 @@ export class ClubScene extends Phaser.Scene {
     this.choiceButtons = [];
     this.choicePanel = undefined;
     this.keyboardStage = 'explore';
+    this.reducedMotion = shouldReduceMotion();
     AudioManager.shared.bind(this);
     this.add.image(640, 360, 'cc-club').setDisplaySize(1280, 720);
 
@@ -60,7 +63,7 @@ export class ClubScene extends Phaser.Scene {
     this.hotspot = new InteractiveHotspot(this, 217, 205, () => this.onHotspotActivated());
     addMuteControl(this);
     this.registerKeyboardControls();
-    this.cameras.main.fadeIn(420, 48, 23, 76);
+    this.cameras.main.fadeIn(this.reducedMotion ? 80 : 420, 48, 23, 76);
   }
 
   private registerKeyboardControls(): void {
@@ -97,8 +100,8 @@ export class ClubScene extends Phaser.Scene {
 
   private onHotspotActivated(): void {
     this.instructionText?.setVisible(false);
-    this.cameras.main.shake(140, 0.003);
-    this.characterStage?.revealAll();
+    if (!this.reducedMotion) this.cameras.main.shake(140, 0.003);
+    this.characterStage?.revealAll(this.reducedMotion);
 
     const note = this.add
       .text(217, 205, '♫', {
@@ -111,7 +114,8 @@ export class ClubScene extends Phaser.Scene {
       })
       .setOrigin(0.5)
       .setDepth(18);
-    this.tweens.add({ targets: note, y: 95, alpha: 0, angle: 14, duration: 850, onComplete: () => note.destroy() });
+    if (this.reducedMotion) note.setY(150).setAlpha(0.82);
+    else this.tweens.add({ targets: note, y: 95, alpha: 0, angle: 14, duration: 850, onComplete: () => note.destroy() });
     this.renderCurrentNode();
   }
 
@@ -122,7 +126,7 @@ export class ClubScene extends Phaser.Scene {
     }
 
     this.keyboardStage = 'dialogue';
-    this.characterStage?.focus(node.speaker, node.expression);
+    this.characterStage?.focus(node.speaker, node.expression, this.reducedMotion);
     this.dialogueBox?.show({ speaker: characterName(node.speaker), text: node.text }, () => {
       if (node.choices?.length) {
         this.showChoices();
@@ -140,7 +144,7 @@ export class ClubScene extends Phaser.Scene {
     if (!this.availableChoices.length) throw new Error('The opening decision has no available choices.');
     this.keyboardStage = 'choices';
 
-    const panel = this.add.container(640, 370).setDepth(60).setAlpha(0);
+    const panel = this.add.container(640, 370).setDepth(60).setAlpha(this.reducedMotion ? 1 : 0);
     const shade = this.add.rectangle(0, -10, 1280, 740, 0x21143c, 0.9);
     const heading = this.add
       .text(0, -254, 'How should the friends finish the wings?', {
@@ -177,7 +181,7 @@ export class ClubScene extends Phaser.Scene {
       return button;
     });
     this.choicePanel = panel;
-    this.tweens.add({ targets: panel, alpha: 1, duration: 280 });
+    if (!this.reducedMotion) this.tweens.add({ targets: panel, alpha: 1, duration: 280 });
   }
 
   private selectChoice(choiceId: string): void {
@@ -222,7 +226,7 @@ export class ClubScene extends Phaser.Scene {
     if (this.keyboardStage === 'transition') return;
     this.keyboardStage = 'transition';
     this.input.enabled = false;
-    this.cameras.main.fadeOut(650, 255, 211, 71);
+    this.cameras.main.fadeOut(this.reducedMotion ? 80 : 650, 255, 211, 71);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
       StoryProgression.shared.enterCostume();
       this.scene.start('CostumeGameScene');

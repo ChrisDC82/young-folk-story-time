@@ -3,6 +3,7 @@ import { carnivalChoicesEpisode } from '../../episodes/carnival-choices/episode'
 import { addMuteControl } from '../components/MuteControl';
 import { GameButton } from '../components/GameButton';
 import { AudioManager } from '../systems/AudioManager';
+import { shouldReduceMotion } from '../systems/MotionPreference';
 import { StoryProgression } from '../systems/StoryProgression';
 
 export class TitleScene extends Phaser.Scene {
@@ -12,6 +13,7 @@ export class TitleScene extends Phaser.Scene {
 
   create(): void {
     AudioManager.shared.bind(this);
+    const reducedMotion = shouldReduceMotion();
     this.add.image(640, 360, 'cc-club').setDisplaySize(1280, 720);
     this.add.rectangle(640, 360, 1280, 720, 0x24123d, 0.62);
 
@@ -41,7 +43,7 @@ export class TitleScene extends Phaser.Scene {
     const start = () => {
       StoryProgression.shared.startNewStory();
       this.input.enabled = false;
-      this.cameras.main.fadeOut(420, 48, 23, 76);
+      this.cameras.main.fadeOut(reducedMotion ? 80 : 420, 48, 23, 76);
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
         this.scene.start('ClubScene');
       });
@@ -60,6 +62,6 @@ export class TitleScene extends Phaser.Scene {
     const enterKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     enterKey?.once(Phaser.Input.Keyboard.Events.DOWN, start);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => enterKey?.destroy());
-    this.cameras.main.fadeIn(350, 48, 23, 76);
+    this.cameras.main.fadeIn(reducedMotion ? 80 : 350, 48, 23, 76);
   }
 }

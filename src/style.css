@@ -48,6 +48,11 @@ body {
   box-shadow: 0 1rem 4rem rgb(0 0 0 / 45%);
 }
 
+#game-container canvas:focus-visible {
+  outline: 4px solid #ffe36e;
+  outline-offset: -4px;
+}
+
 #portrait-message {
   display: none;
   position: fixed;

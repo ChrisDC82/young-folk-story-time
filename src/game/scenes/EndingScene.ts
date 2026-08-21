@@ -136,7 +136,7 @@ export class EndingScene extends Phaser.Scene {
     const reflection = this.add
       .text(0, -190, this.storyCard.reflection, {
         fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '21px',
+        fontSize: '23px',
         color: '#4e2869',
         align: 'center',
         wordWrap: { width: 1030 },
@@ -145,7 +145,7 @@ export class EndingScene extends Phaser.Scene {
     const momentsTitle = this.add
       .text(-520, -125, 'MOMENTS FROM YOUR STORY', {
         fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '22px',
+        fontSize: '24px',
         fontStyle: 'bold',
         color: '#8d2f73',
       });
@@ -155,9 +155,9 @@ export class EndingScene extends Phaser.Scene {
       this.storyCard.accomplishments.map((item) => `• ${item}`).join('\n'),
       {
         fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '18px',
+        fontSize: '24px',
         color: '#2b1648',
-        lineSpacing: 9,
+        lineSpacing: 6,
         wordWrap: { width: 1010 },
       },
     );
@@ -172,13 +172,13 @@ export class EndingScene extends Phaser.Scene {
 
     const replayButton = new GameButton(this, -235, 272, 'PLAY AGAIN  ↻', () => this.replayStory(), {
       width: 390,
-      height: 76,
+      height: 82,
       fontSize: 29,
       fillColor: 0xffd34e,
     });
     const titleButton = new GameButton(this, 235, 272, 'TITLE', () => this.returnToTitle(), {
       width: 300,
-      height: 76,
+      height: 82,
       fontSize: 29,
       fillColor: 0xd8c2ef,
     });
@@ -186,9 +186,9 @@ export class EndingScene extends Phaser.Scene {
     this.children.remove(titleButton);
     panel.add([replayButton, titleButton]);
     this.add
-      .text(640, 706, 'Enter / Space / R: Play Again   •   T: Title   •   M: Mute', {
+      .text(640, 696, 'Enter / Space / R: Play Again   •   T: Title   •   M: Mute', {
         fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '17px',
+        fontSize: '19px',
         color: '#fff8dc',
         backgroundColor: '#2b1648dd',
         padding: { x: 12, y: 4 },
@@ -208,7 +208,7 @@ export class EndingScene extends Phaser.Scene {
     achievement: StoryCardAchievement,
   ): Phaser.GameObjects.Container {
     const container = this.add.container(x, y);
-    const backing = this.add.rectangle(0, 0, 300, 122, 0xf8e7b0, 1).setStrokeStyle(4, 0x6d3f91, 1);
+    const backing = this.add.rectangle(0, 0, 300, 130, 0xf8e7b0, 1).setStrokeStyle(4, 0x6d3f91, 1);
     const seal = this.add.circle(-104, -4, 43, achievement.source === 'ending' ? 0xf49ac2 : 0xffd34e, 1)
       .setStrokeStyle(4, 0xfffbdf, 1);
     const symbol = this.add
@@ -222,7 +222,7 @@ export class EndingScene extends Phaser.Scene {
     const label = this.add
       .text(30, -23, achievement.label, {
         fontFamily: 'Trebuchet MS, Arial Rounded MT Bold, sans-serif',
-        fontSize: '19px',
+        fontSize: '20px',
         fontStyle: 'bold',
         color: '#8d2f73',
         align: 'center',
@@ -232,7 +232,7 @@ export class EndingScene extends Phaser.Scene {
     const description = this.add
       .text(30, 24, achievement.description, {
         fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: '14px',
+        fontSize: '18px',
         color: '#2b1648',
         align: 'center',
         wordWrap: { width: 165 },

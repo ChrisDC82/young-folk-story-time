@@ -69,7 +69,7 @@ export class CarnivalScene extends Phaser.Scene {
       junior: { x: 990, y: 570, width: 140, height: 235 },
     });
     this.characterStage.showLead('lexi');
-    this.characterStage.revealAll();
+    this.characterStage.revealAll(this.reducedMotion);
     this.dialogueBox = new DialogueBox(this);
     addMuteControl(this);
     this.registerKeyboard();
@@ -122,7 +122,7 @@ export class CarnivalScene extends Phaser.Scene {
       return;
     }
     this.phase = phase;
-    this.characterStage?.focus(line.characterId, line.expression);
+    this.characterStage?.focus(line.characterId, line.expression, this.reducedMotion);
     this.dialogueBox?.show({ speaker: line.speaker, text: line.text }, () => {
       this.playDialogue(lines, onComplete, index + 1, phase);
     });
@@ -172,7 +172,7 @@ export class CarnivalScene extends Phaser.Scene {
     if (this.phase !== 'explore' || !this.experience) return;
     const hotspot = this.experience.visit(hotspotId);
     this.phase = 'reaction';
-    this.characterStage?.focus(hotspot.reaction.characterId, hotspot.reaction.expression);
+    this.characterStage?.focus(hotspot.reaction.characterId, hotspot.reaction.expression, this.reducedMotion);
     this.dialogueBox?.show({ speaker: hotspot.reaction.speaker, text: hotspot.reaction.text }, () => {
       this.phase = 'explore';
       this.canContinue = true;

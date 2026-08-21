@@ -10,6 +10,7 @@ export class CostumeStepCard extends Phaser.GameObjects.Container {
 
   private readonly background: Phaser.GameObjects.Graphics;
   private readonly hintGlow: Phaser.GameObjects.Graphics;
+  private readonly reducedMotion: boolean;
   private enabled = true;
   private didDrag = false;
 
@@ -20,12 +21,14 @@ export class CostumeStepCard extends Phaser.GameObjects.Container {
     step: CostumeStep,
     onDrop: CardHandler,
     onTap: CardHandler,
+    reducedMotion = false,
   ) {
     super(scene, x, y);
     scene.add.existing(this);
     this.step = step;
     this.homeX = x;
     this.homeY = y;
+    this.reducedMotion = reducedMotion;
 
     this.hintGlow = scene.add.graphics().setAlpha(0);
     this.hintGlow.lineStyle(7, 0xfff09a, 0.95);
@@ -82,11 +85,19 @@ export class CostumeStepCard extends Phaser.GameObjects.Container {
 
   moveToSlot(x: number, y: number): void {
     this.scene.tweens.killTweensOf(this);
+    if (this.reducedMotion) {
+      this.setPosition(x, y).setScale(0.86);
+      return;
+    }
     this.scene.tweens.add({ targets: this, x, y, scale: 0.86, duration: 220, ease: 'Back.Out' });
   }
 
   returnHome(delay = 0): void {
     this.scene.tweens.killTweensOf(this);
+    if (this.reducedMotion) {
+      this.setPosition(this.homeX, this.homeY).setScale(1).setAngle(0);
+      return;
+    }
     this.scene.tweens.add({
       targets: this,
       x: this.homeX,
@@ -101,6 +112,10 @@ export class CostumeStepCard extends Phaser.GameObjects.Container {
 
   wobbleAndReturn(delay = 0): void {
     this.scene.tweens.killTweensOf(this);
+    if (this.reducedMotion) {
+      this.returnHome(delay);
+      return;
+    }
     this.scene.tweens.add({
       targets: this,
       angle: { from: -4, to: 4 },
@@ -116,6 +131,10 @@ export class CostumeStepCard extends Phaser.GameObjects.Container {
     this.scene.tweens.killTweensOf(this.hintGlow);
     if (!active) {
       this.hintGlow.setAlpha(0);
+      return;
+    }
+    if (this.reducedMotion) {
+      this.hintGlow.setAlpha(0.9);
       return;
     }
     this.hintGlow.setAlpha(0.35);
