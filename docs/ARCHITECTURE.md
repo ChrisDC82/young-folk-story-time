@@ -33,7 +33,7 @@ Phaser scene + reusable UI/character components
 
 The shared `GameStateManager` instance is reset when a new story starts from the title screen. It is not reset during Phaser scene transitions, so the Completion scene can resolve the selected branch. Tests can construct non-shared managers for complete isolation.
 
-The current typed state through Milestone 7 contains:
+The current typed run state through Milestone 8 contains:
 
 - Angel trust
 - Junior trust
@@ -162,6 +162,31 @@ branch-specific exchange → temporary Milestone 8 continuation point
 - New typed state is limited to `crisisTriggered`, `wingStrapBroke`, `nearbyCostumeProblem`, `blamedSomeone`, `repairedMistakeTogether`, `askedForCrisisHelp`, `angelAdmittedShortcut`, `crisisChoice`, `crisisResolved`, and `repairAttempts`. The shared manager retains every valid opening, costume, badge, Pan Jam, and Moko Jumbie value across the scene.
 - No new dependency, API, service, audio file, commercial asset, runtime image, or asset derivative was required.
 
+## Milestone 8 endings, Story Card, and replay
+
+```text
+Milestone 7 crisis resolved
+        ↓ StoryProgression.enterEnding()
+EndingResolver (read-only state snapshot)
+        ↓ deterministic EndingId
+episode endings.ts → EndingScene dialogue
+        ↓
+StoryCardBuilder → reflection + existing badges + ending badge
+        ↓
+StoryProgression.completeMilestone8()
+        ↓ Play Again
+StoryProgression.startNewStory() → reset run state → ClubScene
+                     AudioManager mute remains unchanged
+```
+
+- `src/game/systems/EndingResolver.ts` imports no Phaser code and applies the documented priority: CC Club Team for cooperation of at least two plus a shared repair; Together on the Road for Angel trust of at least two plus a supportive Moko response; We Fixed It for the shortcut plus Angel’s admission; otherwise One Little Step.
+- `src/episodes/carnival-choices/endings.ts` owns the exact ending names, concise character dialogue, positive reflections, and ending-badge metadata. All four definitions reuse existing character IDs and expression mappings.
+- `src/game/systems/StoryCardBuilder.ts` imports no Phaser code. It derives up to four accomplishments from the immutable run snapshot, includes Creator Badge only from `costumeCompleted`, includes Rhythm Star only from `panCompleted`, and appends the resolved ending badge.
+- `src/types/endings.ts` contains typed ending IDs, badge IDs, ending definitions, achievements, and Story Card output. No ending ID or badge is copied into mutable `CarnivalGameState`; resolution and card generation remain deterministic read-only derivations.
+- `EndingScene` owns presentation and input orchestration: existing Carnival/character art, ending dialogue, code-drawn Story Card/badges/sparkles, large buttons, pointer/touch, keyboard replay, Title, mute, reduced motion, and responsive desktop/landscape-phone rendering.
+- `StoryProgression` guards entry after `milestone-7-complete`, marks the Story Card as `milestone-8-complete`, and reuses `startNewStory()` for replay. That method resets `GameStateManager` and the scene stage but does not reset the separate application-level `AudioManager` mute preference.
+- No new dependency, API, service, audio file, commercial asset, runtime image, or asset derivative was required.
+
 ## Deferred boundaries
 
-The engine can represent later branches, but the project does not yet implement Angel’s final Carnival decision, ending resolution, the four planned endings, the final Story Card/badge summary, AI reflection, saving, backend services, authentication, database storage, or analytics. Those systems should consume the same state and narrative contracts in Milestone 8 or later without replacing the completed crisis architecture.
+The playable narrative arc is complete through the four endings and Story Card. Deferred work is limited to Milestone 9 visual/audio polish, later release-candidate and hackathon-submission preparation, AI reflection, saving, backend services, authentication, database storage, analytics, deployment, and other explicitly later scope. Later work should preserve the completed resolver, Story Card, replay, and Milestones 1–8 state contracts.

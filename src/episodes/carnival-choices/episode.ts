@@ -2,6 +2,7 @@ import { carnivalCharacters } from './characters';
 import { ccClubOpeningStory } from './dialogue';
 import { mokoJumbieStory } from './mokoJumbie';
 import { nonShortcutCrisisStory, shortcutCrisisStory } from './crisis';
+import { carnivalEndings } from './endings';
 
 export const carnivalChoicesEpisode = {
   id: 'carnival-choices',
@@ -22,4 +23,5 @@ export const carnivalChoicesEpisode = {
     shortcut: shortcutCrisisStory,
     nonShortcut: nonShortcutCrisisStory,
   },
+  endings: carnivalEndings,
 } as const;

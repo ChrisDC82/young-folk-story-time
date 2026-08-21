@@ -8,6 +8,7 @@ import { PreloadScene } from './scenes/PreloadScene';
 import { PanGameScene } from './scenes/PanGameScene';
 import { MokoJumbieScene } from './scenes/MokoJumbieScene';
 import { CarnivalCrisisScene } from './scenes/CarnivalCrisisScene';
+import { EndingScene } from './scenes/EndingScene';
 import { StoryTimeScene } from './scenes/StoryTimeScene';
 import { TitleScene } from './scenes/TitleScene';
 
@@ -33,6 +34,7 @@ export function buildGameConfig(parent: string): Phaser.Types.Core.GameConfig {
       PanGameScene,
       MokoJumbieScene,
       CarnivalCrisisScene,
+      EndingScene,
     ],
     render: {
       antialias: true,

@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 8 additions
+
+- Newly written episode-owned dialogue and reflections for Together on the Road, One Little Step, We Fixed It, and CC Club Team, preserving the four names and priority previously established in the game design.
+- Reusable Phaser-independent `EndingResolver` and `StoryCardBuilder` models, typed ending/achievement metadata, and read-only use of the complete Milestones 1–7 narrative snapshot. No new mutable run-state field or duplicate badge framework was introduced.
+- A newly written `EndingScene` with concise emotional payoff, code-drawn Story Card and achievement seals, existing Creator Badge/Rhythm Star signals, one ending badge, Play Again, Title, persistent mute, reduced motion, and responsive pointer/touch/keyboard controls.
+- Eleven additional tests plus all-four-ending desktop/wide-phone browser validation, including replay into a second run and clean endpoint consoles.
+- Existing artwork was reused unchanged. No new image, derivative, dependency, API, paid service, credit, trial, subscription, commercial asset, external audio, or hosted service was introduced.
+
 ## Milestone 7 additions
 
 - Newly written episode-owned shortcut and non-shortcut Carnival Crisis stories, three shared choices, a conditional fourth Angel-disclosure choice, trust/emotional-history-dependent responses, branch-specific post-repair dialogue, and a temporary Milestone 8 continuation point.
@@ -66,4 +74,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 7, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 8, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.

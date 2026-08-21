@@ -5,7 +5,7 @@ import { CostumeSequenceGame } from '../../src/game/minigames/costume/CostumeSeq
 import { ChoiceSystem } from '../../src/game/systems/ChoiceSystem';
 import { GameStateManager } from '../../src/game/systems/GameStateManager';
 import { StoryProgression } from '../../src/game/systems/StoryProgression';
-import type { OpeningChoiceId } from '../../src/types/gameState';
+import { INITIAL_CARNIVAL_GAME_STATE, type OpeningChoiceId } from '../../src/types/gameState';
 
 function completeCostume(state: GameStateManager, choiceId: OpeningChoiceId = 'follow-angel'): void {
   ChoiceSystem.select(choiceId, openingChoices, state);
@@ -117,7 +117,7 @@ describe('StoryProgression', () => {
     expect(progression.currentStage).toBe('club');
   });
 
-  it('contains only the implemented typed state through Milestone 7', () => {
+  it('contains only the implemented typed run state through Milestone 8', () => {
     const keys = Object.keys(new GameStateManager().snapshot).sort();
 
     expect(keys).toEqual([
@@ -208,5 +208,37 @@ describe('StoryProgression', () => {
       { key: 'crisisResolved', operation: 'set', value: true },
     ]);
     expect(progression.completeMilestone7()).toBe('milestone-7-complete');
+  });
+
+  it('guards ending entry, Story Card completion, and full replay reset', () => {
+    const state = new GameStateManager();
+    const progression = new StoryProgression(state);
+    expect(() => progression.enterEnding()).toThrow('Carnival Crisis must be resolved');
+
+    completeCostume(state, 'work-together');
+    progression.enterCostume();
+    progression.enterStoryTime();
+    progression.arriveAtCarnival();
+    progression.enterPanJam();
+    state.applyEffects([
+      { key: 'panCompleted', operation: 'set', value: true },
+      { key: 'angelMokoResponse', operation: 'set', value: 'accepted-explanation' },
+    ]);
+    progression.completeMilestone5();
+    progression.enterMokoJumbie();
+    progression.completeMilestone6();
+    progression.enterCarnivalCrisis();
+    state.applyEffects([
+      { key: 'crisisTriggered', operation: 'set', value: true },
+      { key: 'crisisChoice', operation: 'set', value: 'repair-together' },
+      { key: 'crisisResolved', operation: 'set', value: true },
+    ]);
+    progression.completeMilestone7();
+
+    expect(progression.enterEnding()).toBe('ending');
+    expect(progression.endingReady).toBe(true);
+    expect(progression.completeMilestone8()).toBe('milestone-8-complete');
+    expect(progression.startNewStory()).toBe('club');
+    expect(state.snapshot).toEqual(INITIAL_CARNIVAL_GAME_STATE);
   });
 });

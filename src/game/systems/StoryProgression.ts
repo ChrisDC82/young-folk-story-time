@@ -32,6 +32,10 @@ export class StoryProgression {
     return this.stage === 'carnival-crisis' && Boolean(this.state.get('angelMokoResponse'));
   }
 
+  get endingReady(): boolean {
+    return this.stage === 'ending' && this.state.get('crisisResolved');
+  }
+
   startNewStory(): EpisodeStage {
     this.state.reset();
     this.stage = 'club';
@@ -116,6 +120,20 @@ export class StoryProgression {
       throw new Error('The Carnival Crisis choice and repair must be complete before Milestone 7 can finish.');
     }
     this.stage = 'milestone-7-complete';
+    return this.stage;
+  }
+
+  enterEnding(): EpisodeStage {
+    if (this.stage !== 'milestone-7-complete' || !this.state.get('crisisResolved')) {
+      throw new Error('The Carnival Crisis must be resolved before the ending.');
+    }
+    this.stage = 'ending';
+    return this.stage;
+  }
+
+  completeMilestone8(): EpisodeStage {
+    if (!this.endingReady) throw new Error('The ending must be ready before the Story Card can complete.');
+    this.stage = 'milestone-8-complete';
     return this.stage;
   }
 }

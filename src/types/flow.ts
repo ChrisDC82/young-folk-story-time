@@ -10,4 +10,6 @@ export type EpisodeStage =
   | 'moko-jumbie'
   | 'milestone-6-complete'
   | 'carnival-crisis'
-  | 'milestone-7-complete';
+  | 'milestone-7-complete'
+  | 'ending'
+  | 'milestone-8-complete';

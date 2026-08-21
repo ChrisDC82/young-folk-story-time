@@ -1,5 +1,50 @@
 # Development Log
 
+## 2026-08-20 — Milestone 8: endings, Story Card, and replay
+
+### Scope completed
+
+- Replaced the temporary Milestone 7 post-crisis endpoint with concise character dialogue for the four planned endings: **Together on the Road**, **One Little Step**, **We Fixed It**, and **CC Club Team**.
+- Added a deterministic, typed, Phaser-independent ending resolver that consumes the accumulated Milestones 1–7 state and follows the priority established in `docs/GAME_DESIGN.md`.
+- Added a Phaser-independent Story Card builder plus a new `EndingScene` that presents the resolved ending, a personal positive reflection, selected accomplishments, existing milestone badges, one ending badge, and clear Play Again/Title actions.
+- Added full replay without browser refresh. Play Again uses `StoryProgression.startNewStory()` to clear run-specific state and return directly to the CC Club while the application-level mute preference remains unchanged.
+
+### Exact ending resolution
+
+Resolution is evaluated in this order so overlapping valid states remain predictable:
+
+1. **CC Club Team** when `cooperation >= 2` and `repairedMistakeTogether === true`.
+2. **Together on the Road** when `angelTrust >= 2` and `angelMokoResponse` is `staying-close`, `shared-height-fear`, or `accepted-explanation`.
+3. **We Fixed It** when `usedShortcut === true` and `angelAdmittedShortcut === true`.
+4. **One Little Step** for every other completed valid journey.
+
+All four endings are reachable through normal choices. No random selection, fifth ending, score, ranking, shaming, or failure conclusion was added.
+
+### Story Card, achievements, and state
+
+- The Story Card always displays the ending title and ending reflection, then selects up to four state-based moments from the run.
+- `costumeCompleted` continues to provide the Creator Badge and `panCompleted` continues to provide the Rhythm Star. Each ending adds only typed presentation metadata for its planned badge: Caring Friend, Courage Counts, Problem Solver, or Team Player.
+- No duplicate achievement framework and no new mutable narrative-state field were added. New types describe ending IDs, ending definitions, ending badges, Story Card achievements, and generated Story Card data.
+- Resolving an ending and generating a Story Card are read-only operations over a state snapshot, so every earlier narrative value remains intact until Play Again deliberately performs the existing full reset.
+
+### Accessibility, controls, assets, and cost
+
+- Ending dialogue and Story Card actions support mouse, pointer/touch-style input, Enter/Space/R keyboard replay, T for Title, persistent M mute access, reduced motion, desktop, and wide landscape-phone layouts.
+- Essential ending and achievement information is written in text and does not depend on sound, particles, colour, or expression alone.
+- Reused the existing Carnival background and character expression derivatives. Story Card panels, badge seals, and sparkles are code-drawn; no new runtime asset or derivative was created.
+- No dependency, API, backend, hosted service, paid service, purchased credit, expiring trial, commercial asset, external audio, subscription, or paid hosting requirement was introduced.
+
+### Automated coverage and validation
+
+- Added 11 tests, bringing the suite to 94 passing tests across 14 files. Coverage includes all four reachable endings, deterministic priority, relationship-state influence, incomplete-journey rejection, Story Card content, badge preservation, state immutability, guarded ending progression, replay reset, and mute persistence.
+- Strict TypeScript checking passed.
+- Production build passed with only the existing Phaser chunk-size advisory.
+- Browser validation passed representative complete routes to all four endings, crisis-to-ending transitions, Story Cards, all three displayed achievements, replay and a second playthrough, mouse, keyboard, touch-style pointer input, desktop, 844×390 landscape phone, mute persistence, reduced motion, and clean endpoint console checks.
+
+### Explicitly deferred
+
+- Milestone 9 visual/audio polish, performance work unrelated to an actual defect, Milestone 10 release-candidate/submission work, final screenshots/video/copy, deployment, AI reflection, backend, authentication, database, analytics, and paid services.
+
 ## 2026-08-20 — Milestone 7: Carnival Crisis and delayed shortcut consequence
 
 ### Scope completed

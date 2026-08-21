@@ -188,7 +188,7 @@ export class CarnivalCrisisScene extends Phaser.Scene {
     const advance = () => {
       if (this.phase === 'dialogue' || this.phase === 'resolution') this.dialogueBox?.handleKeyboardAdvance();
       else if (this.phase === 'repair-secure') this.secureFastening();
-      else if (this.phase === 'complete') this.scene.start('TitleScene');
+      else if (this.phase === 'complete') this.beginEnding();
     };
     enter?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
     space?.on(Phaser.Input.Keyboard.Events.DOWN, advance);
@@ -508,7 +508,7 @@ export class CarnivalCrisisScene extends Phaser.Scene {
       )
       .setOrigin(0.5);
     const next = this.add
-      .text(0, 55, 'The immediate problem is solved. Their choices stay with the story for what comes next.', {
+      .text(0, 55, 'The immediate problem is solved. Now see where their choices lead.', {
         fontFamily: 'Trebuchet MS, sans-serif',
         fontSize: '22px',
         color: '#fff8dc',
@@ -516,13 +516,25 @@ export class CarnivalCrisisScene extends Phaser.Scene {
         wordWrap: { width: 730 },
       })
       .setOrigin(0.5);
-    const titleButton = new GameButton(this, 0, 145, 'Return to title', () => this.scene.start('TitleScene'), {
-      width: 340,
+    const endingButton = new GameButton(this, 0, 145, 'See your story ending  ▶', () => this.beginEnding(), {
+      width: 410,
       height: 78,
-      fontSize: 27,
+      fontSize: 26,
+      fillColor: 0xffd34e,
     });
-    this.children.remove(titleButton);
-    panel.add([shade, title, message, next, titleButton]);
+    this.children.remove(endingButton);
+    panel.add([shade, title, message, next, endingButton]);
     if (!this.reducedMotion) this.tweens.add({ targets: panel, alpha: 1, scale: 1, duration: 430, ease: 'Back.Out' });
+  }
+
+  private beginEnding(): void {
+    if (this.phase !== 'complete' || StoryProgression.shared.currentStage !== 'milestone-7-complete') return;
+    this.phase = 'transition';
+    StoryProgression.shared.enterEnding();
+    this.input.enabled = false;
+    this.cameras.main.fadeOut(this.reducedMotion ? 80 : 520, 255, 211, 71);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.scene.start('EndingScene');
+    });
   }
 }
