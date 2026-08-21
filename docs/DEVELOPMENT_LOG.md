@@ -1,5 +1,33 @@
 # Development Log
 
+## 2026-08-21 — Milestone 10: hackathon release candidate
+
+### Release audit and correction
+
+- Verified the accepted Milestone 9 commit and the annotated Milestone 7, 8, and 9 tags before making changes. The pre-flight working tree was clean, history was linear, and the repository had no remote or deployment configuration.
+- Reviewed the complete game, architecture, scenes, state and episode systems, tests, package/build configuration, artwork provenance, privacy/network surface, dependencies, and public presentation. No feature expansion, narrative change, ending-priority change, dependency update, or asset change was needed.
+- Found one genuine accessibility gap during production-browser inspection: the generated Phaser canvas had neither a keyboard focus stop nor an accessible name, so the existing focus-visible CSS could not be reached through normal focus navigation. Added a small Phaser-independent canvas configuration helper and regression test; it now applies `tabindex="0"`, `role="application"`, and a concise accessible name when the game is created.
+
+### Browser and release QA
+
+- Completed a normal-motion 1280×720 production playthrough using Follow Angel, the shortcut crisis, trust-dependent honest disclosure, repair assistance after two unsuitable material selections, **We Fixed It**, Story Card, mute/unmute, and replay into a second game.
+- Completed a reduced-motion 844×390 production playthrough using Work Together, the non-shortcut nearby-costume crisis, shared repair, **CC Club Team**, and the final Story Card. Pointer/touch-style card placement, keyboard choices and Pan Jam zones, readable dialogue, large controls, responsive scaling, normal and reduced feedback, and resource cleanup remained stable.
+- Rechecked the current release at 740×360 on the title and completed Story Card, retaining readable content, reachable controls, and the full landscape canvas; Milestone 10 did not alter scene sizing or typography. Production console review showed only Phaser's informational startup banner, with no warnings or errors.
+- Confirmed the title and instructions make the next action visible, the activities explain themselves, the emotional/crisis choices remain child-friendly, no temporary milestone language or development label is visible, and the Story Card closes the experience cleanly.
+
+### Release documentation and deployment handoff
+
+- Replaced the stale Milestone 6 README with a concise public-project overview covering the complete journey, meaningful-choice approach, controls, accessibility, technology, local commands, structure, privacy, cost, and protected-artwork provenance.
+- Added review-ready Devpost copy, a seven-image screenshot plan, a short actual-gameplay demo-video plan, and an exact free static-host deployment handoff.
+- No public deployment was attempted because the repository has no remote and external hosting requires Chris's account, visibility, and provider decisions. The build is self-contained in `dist/`; no environment variable, API key, backend, billing, or paid service is required.
+- Culturally specific wording remains unchanged and was rechecked against public National Carnival Commission and NALIS descriptions. The asset manifest confirms every protected original and runtime image remained unchanged and documented.
+
+### Validation and boundaries
+
+- Added one regression test, bringing the suite to 95 passing tests across 15 files. Strict TypeScript checking and production build pass; the build reports only the accepted Phaser bundle-size advisory.
+- Dependency audits report no known production or development vulnerabilities. Repository scans found no credential, secret, analytics, tracking, player-data transmission, environment file, accidental generated artifact, or runtime network dependency.
+- No new dependency, API, backend, analytics tool, commercial asset, audio file, runtime derivative, paid service, purchased credit, trial, subscription, or Milestone 11 work was introduced.
+
 ## 2026-08-20 — Milestone 9: visual, audio, UX, and presentation polish
 
 ### Scope completed

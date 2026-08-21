@@ -209,6 +209,24 @@ scene-specific Story Card readability and costume celebration polish
 - The four-channel `AudioManager`, synthesized `SteelpanSynth`, persistent mute state, scene-level synth shutdown, and all episode-owned note definitions remain unchanged after review; no audio defect required an architectural modification.
 - No state field, narrative condition, ending rule, mini-game model, dependency, asset, derivative, API, paid service, or Milestone 10 system was introduced.
 
+## Milestone 10 release-candidate boundary
+
+Milestone 10 freezes the completed game architecture. No narrative rule, state field, episode branch, ending condition, mini-game model, dependency, or asset pipeline changed. The only implementation correction is a small browser-accessibility bootstrap at the application boundary:
+
+```text
+main.ts → createGame()
+              ↓
+       Phaser.Game canvas
+              ↓
+configureCanvasAccessibility(canvas)
+   tabindex + role + accessible name
+```
+
+- `src/game/systems/CanvasAccessibility.ts` is a Phaser-independent helper that gives the generated canvas a keyboard focus stop, application role, and accessible name. It activates the existing CSS focus-visible treatment without changing game input, layout, state, or scene lifecycle.
+- `Game.ts` applies the helper immediately after Phaser creates the canvas. The behavior has a focused unit test and was verified in the production build.
+- The shipping application remains a static single-page Vite build. `base: './'` keeps generated asset references relative, `dist/` contains the deployable site, and no environment variable, API, server route, backend, account, or runtime network service is required.
+- Release and submission documentation are presentation artifacts only. They do not participate in runtime state or modify protected artwork.
+
 ## Deferred boundaries
 
-The playable narrative arc and Milestone 9 presentation pass are complete through the four endings and Story Card. Deferred work is limited to Milestone 10 release-candidate and hackathon-submission preparation, AI reflection, saving, backend services, authentication, database storage, analytics, deployment, and other explicitly later scope. Later work should preserve the completed resolver, Story Card, replay, and Milestones 1–9 presentation and state contracts.
+The hackathon release candidate is complete through the four endings, Story Card, replay, accessibility hardening, release documentation, and static-deployment handoff. A public URL remains an account-owner action documented in `docs/DEPLOYMENT.md`. Any future story, AI reflection, saving, backend, authentication, database, analytics, or additional activity is outside the accepted hackathon build and should preserve the completed resolver, Story Card, replay, presentation, provenance, and state contracts.

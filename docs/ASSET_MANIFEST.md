@@ -1,13 +1,13 @@
 # Asset Manifest
 
-Inventory completed on 2026-08-17 and updated after Milestone 8. All supplied files are PNG images in RGB mode and therefore contain no alpha channel in their original form. The `assets-original/` directory is protected; no source file was modified, renamed, resized, overwritten, cropped, converted, or deleted.
+Inventory completed on 2026-08-17 and release-audited for Milestone 10. All supplied files are PNG images in RGB mode and therefore contain no alpha channel in their original form. The `assets-original/` directory is protected; no source file was modified, renamed, resized, overwritten, cropped, converted, or deleted.
 
 ## Ownership, licensing, and provenance
 
 - The supplied **Young Folk** character and environment artwork came from the project's creator and predates the interactive browser-game implementation.
 - No separate asset license file or third-party license terms were present in the project at inspection time. This manifest therefore does not assert any broader redistribution or reuse rights.
 - Runtime derivatives retain the provenance and protected status of their supplied source artwork. Creating a technical derivative does not change the underlying ownership.
-- No external asset service, paid tool, generated replacement, downloaded character art, or downloaded audio was used for Milestones 1–8.
+- No external asset service, paid tool, generated replacement, downloaded character art, or downloaded audio was used for Milestones 1–10.
 - The Phaser/TypeScript game implementation and interactive content are newly created work, separately documented in `docs/HACKATHON_NOTES.md`.
 
 ## Supplied source assets
@@ -92,6 +92,13 @@ Inventory completed on 2026-08-17 and updated after Milestone 8. All supplied fi
 - The visual consistency and responsive pass reuses the complete existing runtime asset set unchanged across the title, CC Club, costume challenge, Story Time, Carnival, Pan Jam, Moko Jumbie, Carnival Crisis, endings, and Story Card.
 - Story Card typography, button feedback, mute feedback, focus indication, reduced-motion alternatives, costume hints, and celebrations remain code-drawn presentation. They do not create saved image or audio derivatives.
 - Every file in `assets-original/` and `public/assets/` remains unchanged. No new runtime image, derivative, audio file, external asset, commercial asset, paid tool, API, hosted service, or asset-processing step was introduced for Milestone 9.
+
+## Milestone 10 release asset audit (no new runtime files)
+
+- The final source/runtime inventory and SHA-256 comparisons confirm that every file in `assets-original/` and `public/assets/` remains unchanged from the accepted Milestone 9 commit.
+- Every image used by the shipping build is covered by the source and runtime tables above. No undocumented generated derivative, temporary screenshot, commercial or unlicensed asset, downloaded recording, copyrighted third-party music, or external asset-service output was introduced.
+- The release README, Devpost draft, screenshot plan, demo-video plan, and deployment handoff reference the existing protected artwork but do not duplicate, process, or grant broader rights to it.
+- Milestone 10 adds no runtime image, saved audio, derivative, font, dependency, API, hosted asset, paid tool, or asset-processing step. This manifest remains the canonical provenance record for the release candidate.
 
 ## Derivative preparation method
 

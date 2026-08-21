@@ -16,6 +16,16 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Milestone 10 release candidate
+
+- Froze the completed Milestones 1–9 story and gameplay architecture. The only runtime change corrects a verified accessibility gap by making the generated Phaser canvas keyboard-focusable and giving it an application role and accessible name; a regression test covers the exact attributes.
+- Replaced the stale README with an accurate public overview and prepared `DEVPOST_SUBMISSION.md`, `SCREENSHOT_PLAN.md`, `DEMO_VIDEO_PLAN.md`, and `DEPLOYMENT.md` for human review and account-owner action.
+- Production QA completed full normal-motion and reduced-motion routes across desktop and landscape-phone layouts, including the shortcut and non-shortcut crises, trust-dependent disclosure, repair assistance, two distinct endings, Story Cards, replay, mute, pointer/touch-style input, keyboard input, and clean console checks.
+- Final automated coverage is 95 passing tests across 15 files. Strict TypeScript, production build, dependency audits, asset integrity checks, secret/privacy/network scans, and repository release audits pass. The only build advisory is the already accepted Phaser chunk-size warning.
+- Cultural wording remains unchanged and respectful. The Moko Jumbie description was rechecked against the [National Carnival Commission](https://ncctt.org/traditional-mas-characters-moko-jumbie/) and [NALIS Carnival guide](https://www.nalis.gov.tt/resources/tt-content-guide/carnival/); the game presents Moko Jumbies as skilled traditional Carnival masqueraders balancing and dancing on tall stilts.
+- No source or runtime artwork changed. No new asset, derivative, dependency, recording, API, backend, analytics, tracking, hosted service, paid service, credit, trial, subscription, or personal-data feature was introduced.
+- The static `dist/` build is ready for a free host, but no repository or game was published because the local repository has no remote and hosting requires Chris's account, repository-visibility, and provider decisions. Exact cost-free settings and verification steps are in `docs/DEPLOYMENT.md`.
+
 ## Milestone 9 additions
 
 - Polished the existing presentation rather than creating new story or gameplay content: shared button selection/press feedback, child-friendly minimum interaction targets, mute feedback, canvas focus visibility, reduced-motion-safe dialogue, consistent character motion handling, and more readable Story Card typography.
@@ -82,4 +92,4 @@ No paid APIs, backends, analytics, advertising, authentication, tracking, or per
 
 ## AI-assisted development
 
-Codex was used to inspect the supplied project and artwork, implement the game code through Milestone 8, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize temporary runtime audio in code, and validate the resulting local browser experience. No supplied character or environment was regenerated or uploaded to an external service.
+Codex was used to inspect the supplied project and artwork, implement and validate the game through Milestone 10, prepare deterministic runtime derivatives and unchanged runtime copies from supplied originals, synthesize runtime Pan Jam audio in code, and prepare local release documentation. No supplied character or environment was regenerated or uploaded to an external service, and no repository, game build, screenshot, or video was published automatically.
