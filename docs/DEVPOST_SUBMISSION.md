@@ -1,6 +1,6 @@
 # Devpost Submission Draft
 
-> Draft for Chris's review. Replace the remaining source-repository placeholder only after the repository is published. Do not submit automatically.
+> Draft for Chris's review. Do not submit automatically.
 
 ## Project Title
 
@@ -95,7 +95,7 @@ The hackathon build is complete. Possible future work—clearly outside this rel
 
 ## Source Code
 
-**Repository URL:** `[SOURCE_REPOSITORY_URL — add after Chris publishes the repository]`
+**Repository URL:** [https://github.com/ChrisDC82/young-folk-story-time](https://github.com/ChrisDC82/young-folk-story-time)
 
 ## Credits and Cultural References
 

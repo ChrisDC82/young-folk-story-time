@@ -57,7 +57,7 @@ The files published are the **contents of `dist/`**, not the repository root.
 - HTTPS and the custom-domain route load successfully.
 - The title, runtime artwork, pointer and keyboard controls, audio initialization, mute/unmute, Pan Jam, Carnival Crisis repair, ending, Story Card, replay, desktop layout, and landscape-phone layout have been checked on the public origin.
 - The browser console has no release-blocking errors.
-- The source repository URL remains intentionally unset until repository publication is separately authorized.
+- Source repository: [https://github.com/ChrisDC82/young-folk-story-time](https://github.com/ChrisDC82/young-folk-story-time)
 
 ## Cost
 

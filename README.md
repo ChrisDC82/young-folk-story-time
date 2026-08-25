@@ -4,6 +4,8 @@
 
 **Live Demo:** [Play Young Folk: Story Time](https://youngfolk.forwardeverfoundation.org)
 
+**Source Code:** [github.com/ChrisDC82/young-folk-story-time](https://github.com/ChrisDC82/young-folk-story-time)
+
 The public release is designed for children and families. It uses calm, non-punitive feedback: mistakes can be retried, help appears after repeated difficulty, and no path uses scores, failure screens, advertising, accounts, or in-app purchases.
 
 ## Playable experience
