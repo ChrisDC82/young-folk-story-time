@@ -18,6 +18,21 @@ Capture the production build in a 1280×720 browser viewport unless a responsive
 
 Capture the Story Card or Pan Jam at approximately 844×390 in a second image only if the listing supports enough screenshots. Keep the full landscape canvas visible; the purpose is to demonstrate usable phone-scale typography and controls, not to replace a stronger desktop image.
 
+## Final live capture set
+
+Captured from [https://youngfolk.forwardeverfoundation.org](https://youngfolk.forwardeverfoundation.org) on 2026-08-25 through one ordinary shortcut-route playthrough. Files `01`–`07` use a 1280×720 viewport; file `08` uses an 844×390 landscape-phone viewport.
+
+| File | What it demonstrates | Devpost use |
+|---|---|---|
+| `docs/submission/screenshots/01-title.png` | Full CC Club title presentation and Caribbean identity | Strongest three |
+| `docs/submission/screenshots/02-costume-challenge.png` | Illustrated sequencing cards and child-friendly creative play | Supporting gallery image |
+| `docs/submission/screenshots/03-pan-jam.png` | Four labelled steelpan zones with the Sun cue illuminated | Strongest three |
+| `docs/submission/screenshots/04-moko-jumbie-choice.png` | Cultural parade context and four empathetic response choices | Supporting gallery image |
+| `docs/submission/screenshots/05-carnival-crisis-choice.png` | Delayed shortcut consequence and cooperative problem-solving options | Supporting gallery image |
+| `docs/submission/screenshots/06-we-fixed-it-ending.png` | Angel's honest disclosure and the emotional narrative payoff | Strongest three |
+| `docs/submission/screenshots/07-story-card.png` | Remembered choices, Creator Badge, Rhythm Star, and Problem Solver badge | Recommended closing image |
+| `docs/submission/screenshots/08-story-card-landscape-phone.png` | Complete Story Card at the landscape-phone viewport | Optional responsive proof |
+
 ## Capture checklist
 
 1. Run `pnpm build` and `pnpm preview` so every image represents the production build.
