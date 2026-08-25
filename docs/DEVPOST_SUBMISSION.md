@@ -1,6 +1,6 @@
 # Devpost Submission Draft
 
-> Draft for Chris's review. Replace the two bracketed URL placeholders after the repository and static site are published. Do not submit automatically.
+> Draft for Chris's review. Replace the remaining source-repository placeholder only after the repository is published. Do not submit automatically.
 
 ## Project Title
 
@@ -91,7 +91,7 @@ The hackathon build is complete. Possible future work—clearly outside this rel
 
 ## Try It
 
-**Playable URL:** `[PUBLIC_DEPLOYMENT_URL — add after Chris completes the authorized free static-host deployment]`
+**Playable URL:** [https://youngfolk.forwardeverfoundation.org](https://youngfolk.forwardeverfoundation.org)
 
 ## Source Code
 

@@ -2,7 +2,9 @@
 
 **Young Folk: Story Time** is a child-friendly browser narrative game set around a Caribbean Community and Cultural Club and Kiddies Carnival. Players guide Lexi through creative activities, friendship choices, a steelpan rhythm challenge, and a Carnival costume problem. The story remembers how the player treated Angel and Junior, then resolves into one of four positive endings and a personal Story Card.
 
-The current release candidate is designed for children and families. It uses calm, non-punitive feedback: mistakes can be retried, help appears after repeated difficulty, and no path uses scores, failure screens, advertising, accounts, or in-app purchases.
+**Live Demo:** [Play Young Folk: Story Time](https://youngfolk.forwardeverfoundation.org)
+
+The public release is designed for children and families. It uses calm, non-punitive feedback: mistakes can be retried, help appears after repeated difficulty, and no path uses scores, failure screens, advertising, accounts, or in-app purchases.
 
 ## Playable experience
 
@@ -60,7 +62,7 @@ pnpm build
 pnpm preview
 ```
 
-The static production site is written to `dist/`. Deployment settings and the remaining account-owner step are documented in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+The static production site is written to `dist/`. Production hosting and build settings are documented in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 ## Project structure
 

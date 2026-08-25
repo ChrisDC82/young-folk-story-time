@@ -1,5 +1,31 @@
 # Development Log
 
+## 2026-08-25 — Post-deployment release finalization
+
+### Production confirmation
+
+- Confirmed the public release at [https://youngfolk.forwardeverfoundation.org](https://youngfolk.forwardeverfoundation.org) over HTTPS.
+- Recorded Vercel as the production host on its free/Hobby tier, `youngfolk.forwardeverfoundation.org` as the custom domain, Hostinger as the DNS provider, and the deployment as a Vite static production build.
+- No paid service, billing feature, analytics, backend, API, account system, or player-data collection was enabled.
+
+### Live release QA
+
+- Completed the public flow from title through pointer start, keyboard dialogue and choices, pointer-driven costume sequencing, Story Time, Carnival exploration, Pan Jam audio, Moko Jumbies, Carnival Crisis repair, **CC Club Team**, Story Card, and replay.
+- Confirmed audio initialization after interaction, mute/unmute, the expected runtime artwork inventory, desktop 1280×720 presentation, and 844×390 landscape-phone presentation without page overflow.
+- The public browser console showed no warnings or errors during the completed route.
+
+### Deployment housekeeping
+
+- Retained the Vercel CLI's `.vercel` ignore entry. Local `.vercel/` metadata remains untracked and is excluded from the release commit.
+- Updated the README live-demo link, production deployment record, Devpost playable URL, development log, and hackathon notes. The source-repository placeholder remains intentionally unresolved.
+
+### Final validation
+
+- Full automated suite: 95 tests passed across 15 files.
+- Strict TypeScript (`tsc --noEmit`): passed.
+- Production build (`tsc --noEmit && vite build`): passed. The accepted Phaser chunk-size advisory remains the only build warning.
+- No gameplay, narrative, asset, dependency, API, analytics, hosting, DNS, or deployment configuration was changed.
+
 ## 2026-08-21 — Milestone 10: hackathon release candidate
 
 ### Release audit and correction

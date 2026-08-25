@@ -16,6 +16,14 @@
 
 No paid APIs, backends, analytics, advertising, authentication, tracking, or personal-data collection were added.
 
+## Final public release
+
+- The playable release is live at [https://youngfolk.forwardeverfoundation.org](https://youngfolk.forwardeverfoundation.org), with HTTPS and the custom domain confirmed.
+- Production hosting uses Vercel's free/Hobby tier, Hostinger DNS, and the static output from the Vite production build. No paid service or billing feature is enabled.
+- Post-deployment public-browser QA completed the title-to-Story-Card route, replay, pointer and keyboard input, audio initialization, mute/unmute, Pan Jam, Carnival Crisis repair, desktop presentation, and 844×390 landscape-phone presentation with no console warnings or errors.
+- The local `.vercel/` directory remains ignored and untracked. No Vercel project metadata, account identifier, token, or credential is included in the release.
+- The public source-repository URL remains intentionally unset until repository creation and publication are separately authorized.
+
 ## Milestone 10 release candidate
 
 - Froze the completed Milestones 1–9 story and gameplay architecture. The only runtime change corrects a verified accessibility gap by making the generated Phaser canvas keyboard-focusable and giving it an application role and accessible name; a regression test covers the exact attributes.
